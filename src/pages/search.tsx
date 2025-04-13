@@ -7,7 +7,7 @@ import { DebateHistory } from "@/interfaces";
 import { ExpandableCard } from "@/components/expandable-card";
 import axios, { AxiosResponse } from "axios";
 import { SearchRequestDto } from "@/interfaces/search-request.dto";
-import Spinner from "@/components/spinner";
+import { Spinner } from "@/components/ui/spinner";
 
 export function SearchPage() {
   const [items, setItems] = useState<DebateHistory[]>([]);
@@ -45,7 +45,7 @@ export function SearchPage() {
         />
         <Button type="button" onClick={research} disabled={researching}>
           {researching ? (
-            <Spinner />
+            <Spinner size="sm" className="bg-black" />
           ) : (
             <>
               <GlobeIcon className="mr-2 h-4 w-4" />

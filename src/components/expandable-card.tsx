@@ -11,6 +11,7 @@ import ReactMarkdown from "react-markdown";
 import { useState } from "react";
 import { type DebateHistory, Provider, HistoryType } from "@/interfaces";
 import { Button } from "@/components/ui/button";
+import { BoxReveal } from "@/components/magicui/box-reveal";
 
 export function ExpandableCard({ item }: { item: DebateHistory }) {
   const [expanded, setExpanded] = useState(false);
@@ -77,9 +78,11 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
             {item.type === HistoryType.internetSearch &&
               item.internetSearch && (
                 <div className="space-y-2">
-                  <p className="text-sm font-medium">
-                    Search query: "{item.internetSearch.searchQuery}"
-                  </p>
+                  <BoxReveal boxColor={"#5046e6"} duration={0.5}>
+                    <p className="text-sm font-medium">
+                      Search query: "{item.internetSearch.searchQuery}"
+                    </p>
+                  </BoxReveal>
                   <div className="space-y-3 mt-2">
                     {item.internetSearch.searchResponse
                       .slice(0, expanded ? undefined : 2)
@@ -95,7 +98,9 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
                               target="_blank"
                               rel="noopener noreferrer"
                             >
-                              {result.title}
+                              <BoxReveal boxColor={"#5046e6"} duration={0.5}>
+                                {result.title}
+                              </BoxReveal>
                             </a>
                             <a
                               href={result.link}
@@ -106,7 +111,11 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
                               <ExternalLink className="h-4 w-4" />
                             </a>
                           </div>
-                          <p className="text-gray-600 mb-2">{result.snippet}</p>
+                          <BoxReveal boxColor={"#5046e6"} duration={0.5}>
+                            <p className="text-gray-600 mb-2">
+                              {result.snippet}
+                            </p>
+                          </BoxReveal>
                           {expanded && (
                             <p className="text-gray-700 text-xs mt-2 border-t pt-2">
                               <ReactMarkdown>{result.content}</ReactMarkdown>
@@ -130,10 +139,12 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
                 {expanded ? (
                   <ReactMarkdown>{item.response}</ReactMarkdown>
                 ) : (
-                  <ReactMarkdown>{`${item.response.substring(
-                    0,
-                    300
-                  )}...`}</ReactMarkdown>
+                  <BoxReveal boxColor={"#5046e6"} duration={0.5}>
+                    <ReactMarkdown>{`${item.response.substring(
+                      0,
+                      300
+                    )}...`}</ReactMarkdown>
+                  </BoxReveal>
                 )}
               </div>
             )}
