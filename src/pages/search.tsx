@@ -5,10 +5,7 @@ import { AnimatedList } from "@/components/magicui/animated-list";
 import { useState } from "react";
 import { DebateHistory } from "@/interfaces";
 import { ExpandableCard } from "@/components/expandable-card";
-// import axios, { AxiosResponse } from "axios";
-// import { SearchRequestDto } from "@/interfaces/search-request.dto";
 import { Spinner } from "@/components/ui/spinner";
-import { ShineBorder } from "@/components/magicui/shine-border";
 import React from "react";
 
 export function SearchPage() {
@@ -22,9 +19,9 @@ export function SearchPage() {
 
     try {
       const eventSource = new EventSource(
-        `http://localhost:4000/test/sse?question=${encodeURIComponent(
-          searchText
-        )}&rounds=2`
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }test/sse?question=${encodeURIComponent(searchText)}&rounds=2`
       );
 
       // Handle messages
@@ -59,6 +56,11 @@ export function SearchPage() {
           value={searchText}
           disabled={researching}
           onChange={(e) => setSearchText(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              research();
+            }
+          }}
           placeholder="Enter your query..."
         />
         <Button type="button" onClick={research} disabled={researching}>
