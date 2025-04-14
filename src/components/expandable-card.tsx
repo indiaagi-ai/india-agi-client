@@ -12,6 +12,7 @@ import { useState } from "react";
 import { type DebateHistory, Provider, HistoryType } from "@/interfaces";
 import { Button } from "@/components/ui/button";
 import { BoxReveal } from "@/components/magicui/box-reveal";
+import { ShineBorder } from "@/components/magicui/shine-border";
 
 export function ExpandableCard({ item }: { item: DebateHistory }) {
   const [expanded, setExpanded] = useState(false);
@@ -53,6 +54,8 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
         expanded ? "ring-2 ring-offset-2 ring-gray-200" : ""
       }`}
     >
+      <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+
       <CardContent className="p-4">
         <div className="flex items-start gap-3">
           <div

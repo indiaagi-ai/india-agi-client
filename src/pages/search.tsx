@@ -5,9 +5,11 @@ import { AnimatedList } from "@/components/magicui/animated-list";
 import { useState } from "react";
 import { DebateHistory } from "@/interfaces";
 import { ExpandableCard } from "@/components/expandable-card";
-import axios, { AxiosResponse } from "axios";
-import { SearchRequestDto } from "@/interfaces/search-request.dto";
+// import axios, { AxiosResponse } from "axios";
+// import { SearchRequestDto } from "@/interfaces/search-request.dto";
 import { Spinner } from "@/components/ui/spinner";
+import { ShineBorder } from "@/components/magicui/shine-border";
+import React from "react";
 
 export function SearchPage() {
   const [items, setItems] = useState<DebateHistory[]>([]);
@@ -16,19 +18,35 @@ export function SearchPage() {
 
   const research = async () => {
     setResearching(true);
-    const searchRequestBody: SearchRequestDto = {
-      question: searchText,
-      rounds: 2,
-    };
+    setItems([]);
+
     try {
-      const searchResponse: AxiosResponse<DebateHistory[]> = await axios.post(
-        "http://localhost:4000/test/collaborative-llm",
-        searchRequestBody
+      const eventSource = new EventSource(
+        `http://localhost:4000/test/sse?question=${encodeURIComponent(
+          searchText
+        )}&rounds=2`
       );
-      setItems(searchResponse.data);
+
+      // Handle messages
+      eventSource.onmessage = ({ data }) => {
+        const historyItem: DebateHistory = JSON.parse(data);
+        setItems((prevVal) => [...prevVal, historyItem]);
+      };
+
+      // Handle errors
+      eventSource.onerror = (error) => {
+        console.error("EventSource error:", error);
+        eventSource.close();
+        setResearching(false);
+      };
+
+      // Handle completion
+      eventSource.addEventListener("complete", () => {
+        eventSource.close();
+        setResearching(false);
+      });
     } catch (e) {
-      console.error(e);
-    } finally {
+      console.error("Error setting up EventSource:", e);
       setResearching(false);
     }
   };
@@ -57,7 +75,9 @@ export function SearchPage() {
       <div className="w-full">
         <AnimatedList>
           {items.map((item, index) => (
-            <ExpandableCard key={index} item={item} />
+            <React.Fragment key={index}>
+              <ExpandableCard item={item} />
+            </React.Fragment>
           ))}
         </AnimatedList>
       </div>
