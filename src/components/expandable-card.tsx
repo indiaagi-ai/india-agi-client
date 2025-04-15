@@ -9,7 +9,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import ReactMarkdown from "react-markdown";
 import { useState } from "react";
-import { type DebateHistory, Provider, HistoryType } from "@/interfaces";
+import { type DebateHistory, HistoryType } from "@/interfaces";
 import { Button } from "@/components/ui/button";
 import { BoxReveal } from "@/components/magicui/box-reveal";
 import { ShineBorder } from "@/components/magicui/shine-border";
@@ -18,16 +18,18 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
   const [expanded, setExpanded] = useState(false);
 
   // Determine icon and color based on provider
-  const getProviderStyles = (provider: Provider) => {
+  const getProviderStyles = (
+    provider: "OpenAI" | "Anthropic" | "Google" | "xAI" | "Groq"
+  ) => {
     switch (provider) {
-      case Provider.OpenAI:
+      case "OpenAI":
         return {
           bgColor: "bg-emerald-100",
           textColor: "text-emerald-700",
           borderColor: "border-emerald-200",
           icon: <MessageSquare className="h-5 w-5" />,
         };
-      case Provider.Google:
+      case "Google":
         return {
           bgColor: "bg-blue-100",
           textColor: "text-blue-700",
@@ -102,7 +104,7 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
                               rel="noopener noreferrer"
                             >
                               <BoxReveal boxColor={"#5046e6"} duration={0.5}>
-                                {result.title}
+                                <>{result.title}</>
                               </BoxReveal>
                             </a>
                             <a
