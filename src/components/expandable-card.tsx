@@ -56,7 +56,10 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
         expanded ? "ring-2 ring-offset-2 ring-gray-200" : ""
       }`}
     >
-      <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+      <ShineBorder
+        shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
+        borderWidth={5}
+      />
 
       <CardContent className="p-4">
         <div className="flex items-start gap-3">
@@ -94,7 +97,7 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
                       .map((result, idx) => (
                         <div
                           key={idx}
-                          className="bg-black p-3 rounded-md text-sm"
+                          className="bg-[#f0f4f9] p-3 rounded-md text-sm"
                         >
                           <div className="flex justify-between items-start">
                             <a
