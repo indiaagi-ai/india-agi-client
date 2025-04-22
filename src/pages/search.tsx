@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { GlobeIcon } from "@radix-ui/react-icons";
 import { AnimatedList } from "@/components/magicui/animated-list";
 import { useState } from "react";
-import { DebateHistory, HistoryType, Provider } from "@/interfaces";
+import { DebateHistory, Provider } from "@/interfaces";
 import { ExpandableCard } from "@/components/expandable-card";
 import { Spinner } from "@/components/ui/spinner";
 import React from "react";
@@ -35,21 +35,13 @@ export function SearchPage() {
         const historyItem: DebateHistory = JSON.parse(data);
         switch (historyItem.model) {
           case "OpenAI":
-            if (historyItem.type === HistoryType.textResponse) {
-              setProvider(Provider.Google);
-            } else {
-              setProvider(Provider.OpenAI);
-            }
+            setProvider(Provider.OpenAI)
             break;
           case "Google":
-            if (historyItem.type === HistoryType.textResponse) {
-              setProvider(Provider.OpenAI);
-            } else {
-              setProvider(Provider.Google);
-            }
+            setProvider(Provider.Google)
             break;
           case "Anthropic":
-            setProvider(Provider.Anthropic);
+            setProvider(Provider.Anthropic)
             break;
           case "xAI":
             setProvider(Provider.xAI);

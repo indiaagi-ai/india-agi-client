@@ -13,9 +13,30 @@ import { type DebateHistory, HistoryType } from "@/interfaces";
 import { Button } from "@/components/ui/button";
 import { BoxReveal } from "@/components/magicui/box-reveal";
 import { ShineBorder } from "@/components/magicui/shine-border";
+import OpenAISvg from "@/assets/openai.svg";
+import GoogleSvg from "@/assets/google.svg";
+import AnthropicSvg from "@/assets/anthropic.svg";
+import XAISvg from "@/assets/xai.svg";
 
 export function ExpandableCard({ item }: { item: DebateHistory }) {
   const [expanded, setExpanded] = useState(false);
+
+  const getModelName = (
+    provider: "OpenAI" | "Anthropic" | "Google" | "xAI" | "Groq"
+  ): string => {
+    switch (provider) {
+      case "OpenAI":
+        return "GPT";
+      case "Google":
+        return "Gemini";
+      case "Anthropic":
+        return "Claude";
+      case "xAI":
+        return "Grok";
+      case "Groq":
+        return "Llama";
+    }
+  };
 
   // Determine icon and color based on provider
   const getProviderStyles = (
@@ -24,17 +45,31 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
     switch (provider) {
       case "OpenAI":
         return {
-          bgColor: "bg-emerald-100",
-          textColor: "text-emerald-700",
-          borderColor: "border-emerald-200",
-          icon: <MessageSquare className="h-5 w-5" />,
+          bgColor: "bg-blue-100",
+          textColor: "text-blue-700",
+          borderColor: "border-blue-200",
+          icon: <img src={OpenAISvg} className="w-5 h-5 rounded-full" />,
         };
       case "Google":
         return {
           bgColor: "bg-blue-100",
           textColor: "text-blue-700",
           borderColor: "border-blue-200",
-          icon: <MessageSquare className="h-5 w-5" />,
+          icon: <img src={GoogleSvg} className="w-5 h-5 rounded-full" />,
+        };
+      case "Anthropic":
+        return {
+          bgColor: "bg-blue-100",
+          textColor: "text-blue-700",
+          borderColor: "border-blue-200",
+          icon: <img src={AnthropicSvg} className="w-5 h-5 rounded-full" />,
+        };
+      case "xAI":
+        return {
+          bgColor: "bg-blue-100",
+          textColor: "text-blue-700",
+          borderColor: "border-blue-200",
+          icon: <img src={XAISvg} className="w-5 h-5 rounded-full" />,
         };
       default:
         return {
@@ -76,10 +111,10 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
           <div className="flex-1 space-y-2">
             <div className="flex justify-between items-center">
               <div className="font-medium">
-                {item.model}{" "}
+                {getModelName(item.model)}{" "}
                 {item.type === HistoryType.internetSearch
-                  ? "Search"
-                  : "Response"}
+                  ? "Searched Internet"
+                  : "Responsed"}
               </div>
             </div>
 
