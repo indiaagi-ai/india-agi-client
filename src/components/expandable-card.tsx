@@ -1,7 +1,6 @@
 import {
   Bell,
   Search,
-  MessageSquare,
   ChevronDown,
   ChevronUp,
   ExternalLink,
