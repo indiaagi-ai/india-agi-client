@@ -112,7 +112,7 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
               <div className="font-medium">
                 {getModelName(item.model)}{" "}
                 {item.type === HistoryType.internetSearch
-                  ? "Searched Internet"
+                  ? "searched the Internet"
                   : "Responsed"}
               </div>
             </div>
