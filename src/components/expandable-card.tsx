@@ -121,7 +121,7 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
               item.internetSearch && (
                 <div className="space-y-2">
                   <BoxReveal boxColor={"#5046e6"} duration={0.5}>
-                    <p className="text-sm font-medium">
+                    <p className="text-sm font-medium font-fira_code">
                       Search query: "{item.internetSearch.searchQuery}"
                     </p>
                   </BoxReveal>
@@ -177,7 +177,7 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
               )}
 
             {item.type === HistoryType.textResponse && item.response && (
-              <div className="text-sm whitespace-pre-line">
+              <div className="text-sm whitespace-pre-line font-fira_code">
                 {expanded ? (
                   <ReactMarkdown>{item.response}</ReactMarkdown>
                 ) : (

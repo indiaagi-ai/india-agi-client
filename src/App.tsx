@@ -4,7 +4,7 @@ import { SearchPage } from "@/pages/search";
 function App() {
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-      <div className="w-full h-screen justify-center flex items-start p-5">
+      <div className="w-full h-screen justify-center flex items-start p-5 bg-[#faf9f5]">
         <SearchPage />
       </div>
     </ThemeProvider>
