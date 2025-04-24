@@ -1,15 +1,17 @@
 import { Item } from "@/interfaces";
 
 export interface DebateHistory {
-  type: "InternetSearch" | "TextResponse";
+  type: "InternetSearch" | "TextResponse" | "RoundUpdate";
   model: "OpenAI" | "Anthropic" | "Google" | "xAI" | "Groq";
   response?: string;
   internetSearch?: InternetSearch;
+  roundNumber?: number;
 }
 
 export enum HistoryType {
   internetSearch = "InternetSearch",
   textResponse = "TextResponse",
+  roundUpdate = "RoundUpdate",
 }
 
 export interface InternetSearch {
