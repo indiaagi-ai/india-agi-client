@@ -1,7 +1,7 @@
 import { Item } from "@/interfaces";
 
 export interface DebateHistory {
-  type: "InternetSearch" | "TextResponse" | "RoundUpdate";
+  type: "InternetSearch" | "TextResponse" | "RoundUpdate" | "ProviderUpdate";
   model: "OpenAI" | "Anthropic" | "Google" | "xAI" | "Groq";
   response?: string;
   internetSearch?: InternetSearch;
