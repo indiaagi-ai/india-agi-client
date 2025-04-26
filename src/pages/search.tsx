@@ -7,18 +7,25 @@ import { DebateHistory, Provider } from "@/interfaces";
 import { ExpandableCard } from "@/components/expandable-card";
 import { Spinner } from "@/components/ui/spinner";
 import React from "react";
-import { SparklesText } from "@/components/magicui/sparkles-text";
 import OpenAISvg from "@/assets/openai.svg";
 import GoogleSvg from "@/assets/google.svg";
 import AnthropicSvg from "@/assets/anthropic.svg";
 import XAISvg from "@/assets/xai.svg";
 import Divider from "@/components/ui/divider";
+import { ShineBorder } from "@/components/magicui/shine-border";
 
 export function SearchPage() {
   const [items, setItems] = useState<DebateHistory[]>([]);
   const [searchText, setSearchText] = useState<string>("");
   const [researching, setResearching] = useState<boolean>(false);
   const [provider, setProvider] = useState<Provider>(Provider.OpenAI);
+
+  const providers = [
+    { id: Provider.OpenAI, icon: OpenAISvg },
+    { id: Provider.Google, icon: GoogleSvg },
+    { id: Provider.Anthropic, icon: AnthropicSvg },
+    { id: Provider.xAI, icon: XAISvg },
+  ];
 
   const research = async () => {
     setResearching(true);
@@ -95,107 +102,34 @@ export function SearchPage() {
           )}
         </Button>
       </div>
-      <div className="w-full flex justify-center">
-        {researching &&
-          (() => {
-            switch (provider) {
-              case Provider.OpenAI:
-                return (
-                  <div className="w-full max-w-2xl flex justify-around">
-                    <SparklesText>
-                      <img
-                        src={OpenAISvg}
-                        className="w-16 h-16 rounded-full bg-blue-100 p-3"
-                      ></img>
-                    </SparklesText>
-                    <img
-                      src={GoogleSvg}
-                      className="w-16 h-16 rounded-full bg-blue-100 p-3"
+      {researching && (
+        <div className="flex justify-center w-full">
+          <div className="w-full max-w-2xl flex justify-around">
+            {providers.map(({ id, icon }) => (
+              <div key={id} className="w-full">
+                {id === provider ? (
+                  <div className="relative w-16 h-16 rounded-full">
+                    <ShineBorder
+                      shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
+                      borderWidth={8}
+                      duration={2}
                     />
                     <img
-                      src={AnthropicSvg}
-                      className="w-16 h-16 rounded-full bg-blue-100 p-3"
-                    />
-                    <img
-                      src={XAISvg}
+                      src={icon}
                       className="w-16 h-16 rounded-full bg-blue-100 p-3"
                     />
                   </div>
-                );
-              case Provider.Google:
-                return (
-                  <div className="w-full h-16 max-w-2xl flex justify-around">
-                    <img
-                      src={OpenAISvg}
-                      className="w-16 h-16 rounded-full bg-blue-100 p-3"
-                    ></img>
-                    <SparklesText>
-                      <img
-                        src={GoogleSvg}
-                        className="w-16 h-16 rounded-full bg-blue-100 p-3"
-                      />
-                    </SparklesText>
-                    <img
-                      src={AnthropicSvg}
-                      className="w-16 h-16 rounded-full bg-blue-100 p-3"
-                    />
-                    <img
-                      src={XAISvg}
-                      className="w-16 h-16 rounded-full bg-blue-100 p-3"
-                    />
-                  </div>
-                );
-              case Provider.Anthropic:
-                return (
-                  <div className="w-full h-16 max-w-2xl flex justify-around">
-                    <img
-                      src={OpenAISvg}
-                      className="w-16 h-16 rounded-full bg-blue-100 p-3"
-                    ></img>
-                    <img
-                      src={GoogleSvg}
-                      className="w-16 h-16 rounded-full bg-blue-100 p-3"
-                    />
-                    <SparklesText>
-                      <img
-                        src={AnthropicSvg}
-                        className="w-16 h-16 rounded-full bg-blue-100 p-3"
-                      />
-                    </SparklesText>
-                    <img
-                      src={XAISvg}
-                      className="w-16 h-16 rounded-full bg-blue-100 p-3"
-                    />
-                  </div>
-                );
-              case Provider.xAI:
-                return (
-                  <div className="w-full h-16 max-w-2xl flex justify-around">
-                    <img
-                      src={OpenAISvg}
-                      className="w-16 h-16 rounded-full bg-blue-100 p-3"
-                    ></img>
-                    <img
-                      src={GoogleSvg}
-                      className="w-16 h-16 rounded-full bg-blue-100 p-3"
-                    />
-                    <img
-                      src={AnthropicSvg}
-                      className="w-16 h-16 rounded-full bg-blue-100 p-3"
-                    />
-                    <SparklesText>
-                      <img
-                        src={XAISvg}
-                        className="w-16 h-16 rounded-full bg-blue-100 p-3"
-                      />
-                    </SparklesText>
-                  </div>
-                );
-              default:
-                return null;
-            }
-          })()}
-      </div>
+                ) : (
+                  <img
+                    src={icon}
+                    className="w-16 h-16 rounded-full bg-blue-100 p-3"
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       <div className="w-full">
         <AnimatedList>
           {items.map((item, index) => (
