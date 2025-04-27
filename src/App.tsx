@@ -3,6 +3,7 @@ import { SearchPage } from "@/pages/search";
 import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 interface ServerToClientEvents {
   onlineCount: (data: OnlineCount) => void;
@@ -54,6 +55,7 @@ function App() {
       <div className="w-full h-screen items-center flex flex-col p-5 overflow-y-scroll bg-[#faf9f5] gap-5">
         <Header count={onlineCount} />
         <SearchPage />
+        <Footer />
       </div>
     </ThemeProvider>
   );

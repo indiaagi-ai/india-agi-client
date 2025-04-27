@@ -162,7 +162,7 @@ export function SearchPage() {
         <div className="w-full md:w-3/6 flex justify-center">
           {(researching || items.length > 0) && (
             <div
-              className="relative flex flex-col gap-10 w-full h-fit max-w-6xl border border-dashed border-black p-5 rounded-3xl"
+              className="relative flex flex-col gap-10 w-full h-[60vh] max-w-6xl border border-dashed border-black p-5 rounded-3xl justify-center"
               ref={outerContainerRef}
             >
               <Circle ref={userIconRef}>
@@ -280,22 +280,24 @@ export function SearchPage() {
           )}
         </div>
 
-        <div className="w-full md:w-3/6">
-          <AnimatedList>
-            {items.map((item, index) => (
-              <React.Fragment key={index}>
-                {item.type === "RoundUpdate" ? (
-                  <Divider
-                    label={`Round ${item.roundNumber} ended ...`}
-                    dotted={false}
-                  />
-                ) : (
-                  <ExpandableCard item={item} />
-                )}
-              </React.Fragment>
-            ))}
-          </AnimatedList>
-        </div>
+        {items.length > 0 && (
+          <div className="w-full md:w-3/6 h-[60vh] overflow-y-scroll border border-dashed border-black rounded-3xl p-5">
+            <AnimatedList>
+              {items.map((item, index) => (
+                <React.Fragment key={index}>
+                  {item.type === "RoundUpdate" ? (
+                    <Divider
+                      label={`Round ${item.roundNumber} ended ...`}
+                      dotted={false}
+                    />
+                  ) : (
+                    <ExpandableCard item={item} />
+                  )}
+                </React.Fragment>
+              ))}
+            </AnimatedList>
+          </div>
+        )}
       </div>
     </div>
   );
