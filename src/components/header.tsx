@@ -8,7 +8,7 @@ const Header = ({ count }: OnlineCount) => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full max-w-4xl flex gap-5 items-end">
+    <div className="w-full max-w-4xl flex gap-5 items-end z-20">
       <div className="flex flex-col items-center">
         <div className="w-full flex justify-end">
           <div className="w-fit px-3 py-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-medium rounded-full shadow-md">

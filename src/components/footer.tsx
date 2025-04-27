@@ -1,8 +1,8 @@
-import { Linkedin, Mail } from "lucide-react";
+import { LinkedInLogoIcon, EnvelopeClosedIcon } from "@radix-ui/react-icons";
 
 const Footer = () => {
   return (
-    <footer className="w-full pt-6 pb-6 border-t border-gray-200 mt-auto">
+    <footer className="w-full pt-6 pb-6 border-t border-gray-200 mt-auto z-20">
       <div className="flex justify-center items-center">
         <div className="text-sm text-gray-600 flex items-center">
           For Feedback, write to Hemen Parekh
@@ -14,14 +14,14 @@ const Footer = () => {
               className="text-gray-500 hover:text-blue-600 transition-colors"
               aria-label="LinkedIn Profile"
             >
-              <Linkedin size={18} />
+              <LinkedInLogoIcon />
             </a>
             <a
               href="mailto:hcp@RecruitGuru.com"
               className="text-gray-500 hover:text-blue-600 transition-colors"
               aria-label="Email"
             >
-              <Mail size={18} />
+              <EnvelopeClosedIcon />
             </a>
           </div>
         </div>

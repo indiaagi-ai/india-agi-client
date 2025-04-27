@@ -1,13 +1,27 @@
 import { motion } from "motion/react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRightIcon } from "lucide-react";
+import { WavyBackground } from "@/components/ui/wavy-background";
 
 export function HeroSectionOne() {
   const navigate = useNavigate();
 
   return (
-    <div className="relative mx-auto my-10 flex max-w-7xl flex-col items-center justify-center">
+    <WavyBackground
+      className="relative mx-auto flex max-w-7xl flex-col items-center justify-center"
+      backgroundFill="#faf9f5"
+    >
       <div className="px-4 py-10 md:py-20">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="relative z-10 mx-auto mb-6 flex justify-center"
+        >
+          <div className="rounded-full bg-blue-100 px-4 py-1 text-sm font-medium text-blue-800 shadow-sm ring-1 ring-blue-200">
+            Launched April 2025
+          </div>
+        </motion.div>
         <h1 className="relative z-10 mx-auto max-w-6xl text-center text-2xl font-bold text-slate-700 md:text-4xl lg:text-7xl dark:text-slate-300">
           {"AI Consensus for India".split(" ").map((word, index) => (
             <motion.span
@@ -71,6 +85,6 @@ export function HeroSectionOne() {
           </button>
         </motion.div>
       </div>
-    </div>
+    </WavyBackground>
   );
 }
