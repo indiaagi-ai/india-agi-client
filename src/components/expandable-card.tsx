@@ -82,6 +82,23 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
 
   const providerStyles = getProviderStyles(item.model);
 
+  const getTextHeader = (
+    provider: "OpenAI" | "Anthropic" | "Google" | "xAI" | "Groq",
+    historyType:
+      | "InternetSearch"
+      | "TextResponse"
+      | "RoundUpdate"
+      | "ProviderUpdate"
+  ) => {
+    if (historyType === "InternetSearch") {
+      return "searched the Internet";
+    } else if (provider === "xAI") {
+      return "provided a consensus response";
+    } else {
+      return "replied";
+    }
+  };
+
   return (
     <Card
       className={`border ${
@@ -111,9 +128,7 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
             <div className="flex justify-between items-center">
               <div className="font-medium">
                 {getModelName(item.model)}{" "}
-                {item.type === HistoryType.internetSearch
-                  ? "searched the Internet"
-                  : "Responsed"}
+                {getTextHeader(item.model, item.type)}
               </div>
             </div>
 
