@@ -2,8 +2,10 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { SearchPage } from "@/pages/search";
 import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
+import { HeroSectionOne } from "@/pages/home";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 
 interface ServerToClientEvents {
   onlineCount: (data: OnlineCount) => void;
@@ -53,8 +55,29 @@ function App() {
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <div className="w-full h-screen items-center flex flex-col p-5 overflow-y-scroll bg-[#faf9f5] gap-5">
-        <Header count={onlineCount} />
-        <SearchPage />
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <Header count={onlineCount} />
+                  <HeroSectionOne />
+                </>
+              }
+            />
+            <Route
+              path="/trynow"
+              element={
+                <>
+                  <Header count={onlineCount} />
+                  <SearchPage />
+                </>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+
         <Footer />
       </div>
     </ThemeProvider>

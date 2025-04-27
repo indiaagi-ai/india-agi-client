@@ -2,17 +2,25 @@ import { OnlineCount } from "@/App";
 import { Users } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { AuroraText } from "@/components/magicui/aurora-text";
+import { useNavigate } from "react-router-dom";
 
-const header = ({ count }: OnlineCount) => {
+const Header = ({ count }: OnlineCount) => {
+  const navigate = useNavigate();
+
   return (
-    <div className="w-full max-w-6xl flex gap-5 items-end">
+    <div className="w-full max-w-4xl flex gap-5 items-end">
       <div className="flex flex-col items-center">
         <div className="w-full flex justify-end">
           <div className="w-fit px-3 py-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-medium rounded-full shadow-md">
             Beta
           </div>
         </div>
-        <h1 className="text-4xl font-bold tracking-tighter md:text-5xl">
+        <h1
+          className="text-4xl font-bold tracking-tighter md:text-5xl hover:cursor-pointer"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
           <AuroraText>IndiaAGI.ai</AuroraText>
         </h1>
       </div>
@@ -33,4 +41,4 @@ const header = ({ count }: OnlineCount) => {
   );
 };
 
-export default header;
+export default Header;
