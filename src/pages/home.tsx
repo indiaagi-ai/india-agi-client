@@ -76,9 +76,9 @@ export function HeroSectionOne() {
             onClick={() => {
               navigate("/trynow");
             }}
-            className="w-60 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 hover:cursor-pointer"
+            className="group w-60 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 hover:cursor-pointer"
           >
-            <span className="group inline-flex items-center">
+            <span className="inline-flex items-center">
               Explore Now
               <ChevronRightIcon className="ml-1 size-4 transition-transform duration-300 group-hover:translate-x-1" />
             </span>

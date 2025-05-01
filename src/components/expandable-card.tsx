@@ -104,7 +104,7 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
       className={`border ${
         providerStyles.borderColor
       } shadow-sm transition-all duration-300 mb-4 backdrop-blur-md [border:1px_solid_rgba(255,255,255,.1)] [box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] ${
-        expanded ? "ring-2 ring-offset-2 ring-gray-200" : ""
+        expanded ? "ring-2 ring-offset-2 ring-gray-200 pr-3" : ""
       }`}
     >
       <ShineBorder
@@ -112,7 +112,7 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
         borderWidth={5}
       />
 
-      <CardContent className="p-4">
+      <CardContent className="p-4 overflow-y-scroll">
         <div className="flex items-start gap-3">
           <div
             className={`p-2 rounded-full ${providerStyles.bgColor} ${providerStyles.textColor} flex-shrink-0`}

@@ -174,7 +174,9 @@ export function SearchPage() {
                 </div>
               </Circle>
               <Circle ref={userQueryRef}>
-                <div className="bg-blue-100 px-5 rounded-sm">{searchText}</div>
+                <div className="bg-blue-100 px-5 rounded-sm max-h-20 overflow-y-scroll">
+                  {searchText}
+                </div>
               </Circle>
               <AnimatedBeam
                 containerRef={outerContainerRef}
