@@ -89,6 +89,7 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
       | "TextResponse"
       | "RoundUpdate"
       | "ProviderUpdate"
+      | "FinalConsensusButtons"
   ) => {
     if (historyType === "InternetSearch") {
       return "searched the Internet";
