@@ -172,10 +172,11 @@ export function SearchPage() {
               model: "xAI",
             };
             setItems((prevVal) => [...prevVal, finalConsensusButtons]);
+            setItems((prevVal) => [...prevVal, historyItem]);
+          } else {
+            setRound(historyItem.roundNumber + 1);
           }
-          setRound(historyItem.roundNumber + 1);
-        }
-        if (historyItem.type !== "ProviderUpdate") {
+        } else if (historyItem.type !== "ProviderUpdate") {
           setItems((prevVal) => [...prevVal, historyItem]);
         }
       };
