@@ -102,6 +102,7 @@ export function HeroSectionOne() {
               autoPlay
               muted
               loop
+              controls
             >
               {/* Replace with your actual video source */}
               <source src={video} type="video/mp4" />

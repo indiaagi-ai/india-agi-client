@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { GlobeIcon } from "@radix-ui/react-icons";
 import { AnimatedList } from "@/components/magicui/animated-list";
-import { useState, useRef, forwardRef } from "react";
+import { useState, useRef, forwardRef, useEffect } from "react";
 import { DebateHistory, Provider } from "@/interfaces";
 import { ExpandableCard } from "@/components/expandable-card";
 import { Spinner } from "@/components/ui/spinner";
@@ -20,6 +20,7 @@ import { LoopIcon, Share2Icon, DownloadIcon } from "@radix-ui/react-icons";
 import { BoxReveal } from "@/components/magicui/box-reveal";
 import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
 import { v4 as randomUUID } from "uuid";
+import { motion } from "motion/react";
 
 export function SearchPage() {
   const [items, setItems] = useState<DebateHistory[]>([]);
@@ -27,6 +28,7 @@ export function SearchPage() {
   const [researching, setResearching] = useState<boolean>(false);
   const [provider, setProvider] = useState<Provider | null>(null);
   const [round, setRound] = useState<number>(1);
+  const [toolTipVisible, setToolTipVisible] = useState<boolean>(false);
   const ROUNDS = 3;
 
   const providers = [
@@ -118,6 +120,30 @@ export function SearchPage() {
     window.open(whatsappUrl, "_blank");
   };
 
+  useEffect(() => {
+    const tooltipSetting = localStorage.getItem("showToolTip");
+
+    if (tooltipSetting === null) {
+      localStorage.setItem("showToolTip", "true");
+      setToolTipVisible(true);
+    } else {
+      setToolTipVisible(tooltipSetting === "true");
+    }
+  }, []);
+
+  const handleTooltipDismiss = () => {
+    setToolTipVisible(false);
+  };
+
+  useEffect(() => {
+    const tooltipSetting = localStorage.getItem("showToolTip");
+    if (searchText.length > 0) {
+      setToolTipVisible(false);
+    } else {
+      setToolTipVisible(tooltipSetting === "true");
+    }
+  }, [searchText]);
+
   const Circle = forwardRef<
     HTMLDivElement,
     { className?: string; children?: React.ReactNode }
@@ -136,10 +162,17 @@ export function SearchPage() {
   });
 
   const research = async () => {
+    if (searchText.length === 0) {
+      return;
+    }
+
     setResearching(true);
     setItems([]);
     setProvider(Provider.OpenAI);
     setRound(1);
+
+    localStorage.setItem("showToolTip", "false");
+    setToolTipVisible(false);
 
     try {
       const eventSource = new EventSource(
@@ -201,7 +234,7 @@ export function SearchPage() {
 
   return (
     <div className="flex flex-col gap-5 w-full max-w-6xl">
-      <div className="flex flex-col items-center space-x-2 space-y-2 md:flex-row md:space-y-0">
+      <div className="relative flex flex-col items-center space-x-2 space-y-2 md:flex-row md:space-y-0">
         <Input
           type="search"
           value={searchText}
@@ -214,6 +247,39 @@ export function SearchPage() {
           }}
           placeholder="Enter your query..."
         />
+
+        {toolTipVisible && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="absolute left-1/2 top-full mt-2 transform -translate-x-1/2 z-20"
+          >
+            <div className="w-full">
+              <div className="bg-blue-600 text-white p-3 rounded-lg shadow-lg max-w-xs">
+                <p className="font-medium text-sm mb-2">
+                  Experience AI collaboration in action!
+                </p>
+                <p className="text-xs mb-3">
+                  Ask a question to see Claude, ChatGPT, Gemini and Grok discuss
+                  your query and provide a consensus answer.
+                </p>
+                <div className="flex justify-between items-center">
+                  <button
+                    onClick={handleTooltipDismiss}
+                    className="bg-white text-blue-600 px-2 py-1 rounded text-xs font-medium hover:cursor-pointer"
+                  >
+                    Okay
+                  </button>
+                </div>
+              </div>
+              {/* Tooltip Arrow */}
+              <div className="w-4 h-4 bg-blue-600 transform rotate-45 absolute left-1/2 -top-2 -ml-2"></div>
+            </div>
+          </motion.div>
+        )}
+
         <Button type="button" onClick={research} disabled={researching}>
           {researching ? (
             <Spinner size="sm" className="bg-black" />
@@ -227,126 +293,124 @@ export function SearchPage() {
       </div>
       <div className="flex flex-col md:flex-row gap-10">
         <div className="w-full md:w-3/6 flex justify-center">
-          {(researching || items.length > 0) && (
+          <div
+            className="relative flex flex-col gap-10 w-full h-[60vh] max-w-6xl border border-dashed border-black p-5 rounded-3xl justify-center"
+            ref={outerContainerRef}
+          >
+            <Circle ref={userIconRef}>
+              <div className="relative w-16 h-16 rounded-full">
+                <img
+                  src={UserSvg}
+                  className="w-16 h-16 rounded-full bg-blue-100 p-3"
+                />
+              </div>
+            </Circle>
+            <Circle ref={userQueryRef}>
+              <div className="bg-blue-100 px-5 rounded-sm max-h-20 overflow-y-scroll">
+                {searchText}
+              </div>
+            </Circle>
+            <AnimatedBeam
+              containerRef={outerContainerRef}
+              fromRef={userIconRef}
+              toRef={userQueryRef}
+              duration={5}
+            />
             <div
-              className="relative flex flex-col gap-10 w-full h-[60vh] max-w-6xl border border-dashed border-black p-5 rounded-3xl justify-center"
-              ref={outerContainerRef}
+              className="flex flex-col w-full gap-5 relative"
+              ref={mainContainerRef}
             >
-              <Circle ref={userIconRef}>
-                <div className="relative w-16 h-16 rounded-full">
-                  <img
-                    src={UserSvg}
-                    className="w-16 h-16 rounded-full bg-blue-100 p-3"
-                  />
-                </div>
-              </Circle>
-              <Circle ref={userQueryRef}>
-                <div className="bg-blue-100 px-5 rounded-sm max-h-20 overflow-y-scroll">
-                  {searchText}
-                </div>
-              </Circle>
-              <AnimatedBeam
-                containerRef={outerContainerRef}
-                fromRef={userIconRef}
-                toRef={userQueryRef}
-                duration={5}
-              />
               <div
-                className="flex flex-col w-full gap-5 relative"
-                ref={mainContainerRef}
+                className="w-full max-w-2xl flex justify-around mx-auto relative border border-dashed border-black rounded-3xl p-5 z-10 bg-[#faf9f5]"
+                ref={containerRef}
               >
-                <div
-                  className="w-full max-w-2xl flex justify-around mx-auto relative border border-dashed border-black rounded-3xl p-5 z-10 bg-[#faf9f5]"
-                  ref={containerRef}
-                >
-                  <div className="absolute -top-3 left-4 px-2 bg-[#faf9f5] font-medium z-20 flex items-center gap-2">
-                    <LoopIcon />
-                    <BoxReveal boxColor={"#5046e6"} duration={0.5} key={round}>
-                      <>Round: {round}</>
-                    </BoxReveal>
-                  </div>
-                  {/* Render the circles first */}
-                  {providers.map(({ id, icon }) => (
-                    <div key={id} className="flex justify-center items-center">
-                      {id === provider ? (
-                        <Circle ref={getModelRef(id)}>
-                          <div className="relative w-16 h-16 rounded-full">
-                            <ShineBorder
-                              shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
-                              borderWidth={8}
-                              duration={1}
-                            />
-                            <img
-                              src={icon}
-                              className="w-16 h-16 rounded-full bg-blue-100 p-3"
-                            />
-                          </div>
-                        </Circle>
-                      ) : (
-                        <Circle ref={getModelRef(id)}>
+                <div className="absolute -top-3 left-4 px-2 bg-[#faf9f5] font-medium z-20 flex items-center gap-2">
+                  <LoopIcon />
+                  <BoxReveal boxColor={"#5046e6"} duration={0.5} key={round}>
+                    <>Round: {round}</>
+                  </BoxReveal>
+                </div>
+                {/* Render the circles first */}
+                {providers.map(({ id, icon }) => (
+                  <div key={id} className="flex justify-center items-center">
+                    {id === provider ? (
+                      <Circle ref={getModelRef(id)}>
+                        <div className="relative w-16 h-16 rounded-full">
+                          <ShineBorder
+                            shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
+                            borderWidth={8}
+                            duration={1}
+                          />
                           <img
                             src={icon}
                             className="w-16 h-16 rounded-full bg-blue-100 p-3"
                           />
-                        </Circle>
-                      )}
-                      <AnimatedBeam
-                        containerRef={containerRef}
-                        fromRef={div1Ref}
-                        toRef={div2Ref}
-                        duration={5}
-                      />
-                      <AnimatedBeam
-                        containerRef={containerRef}
-                        fromRef={div2Ref}
-                        toRef={div3Ref}
-                        duration={5}
-                      />
-                    </div>
-                  ))}
-                </div>
-                <div
-                  className="w-full max-w-2xl flex justify-center mx-auto relative"
-                  ref={consensusContainerRef}
-                >
-                  <div className="z-10 bg-blue-100 flex justify-center items-center rounded-3xl relative px-5">
-                    {provider === Provider.xAI && (
-                      <ShineBorder
-                        shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
-                        borderWidth={8}
-                        duration={1}
-                      />
+                        </div>
+                      </Circle>
+                    ) : (
+                      <Circle ref={getModelRef(id)}>
+                        <img
+                          src={icon}
+                          className="w-16 h-16 rounded-full bg-blue-100 p-3"
+                        />
+                      </Circle>
                     )}
-                    <img src={XAISvg} className="rounded-full p-3 h-16 w-16" />
-                    <span>Consensus Engine</span>
+                    <AnimatedBeam
+                      containerRef={containerRef}
+                      fromRef={div1Ref}
+                      toRef={div2Ref}
+                      duration={5}
+                    />
+                    <AnimatedBeam
+                      containerRef={containerRef}
+                      fromRef={div2Ref}
+                      toRef={div3Ref}
+                      duration={5}
+                    />
                   </div>
+                ))}
+              </div>
+              <div
+                className="w-full max-w-2xl flex justify-center mx-auto relative"
+                ref={consensusContainerRef}
+              >
+                <div className="z-10 bg-blue-100 flex justify-center items-center rounded-3xl relative px-5">
+                  {provider === Provider.xAI && (
+                    <ShineBorder
+                      shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
+                      borderWidth={8}
+                      duration={1}
+                    />
+                  )}
+                  <img src={XAISvg} className="rounded-full p-3 h-16 w-16" />
+                  <span>Consensus Engine</span>
                 </div>
-                <AnimatedBeam
-                  containerRef={mainContainerRef}
-                  fromRef={containerRef}
-                  toRef={consensusContainerRef}
-                  startXOffset={-10}
-                  endXOffset={-10}
-                  duration={5}
-                />
-                <AnimatedBeam
-                  containerRef={mainContainerRef}
-                  fromRef={containerRef}
-                  toRef={consensusContainerRef}
-                  startXOffset={10}
-                  endXOffset={10}
-                  duration={5}
-                  reverse
-                />
               </div>
               <AnimatedBeam
-                containerRef={outerContainerRef}
-                fromRef={userIconRef}
-                toRef={mainContainerRef}
+                containerRef={mainContainerRef}
+                fromRef={containerRef}
+                toRef={consensusContainerRef}
+                startXOffset={-10}
+                endXOffset={-10}
                 duration={5}
               />
+              <AnimatedBeam
+                containerRef={mainContainerRef}
+                fromRef={containerRef}
+                toRef={consensusContainerRef}
+                startXOffset={10}
+                endXOffset={10}
+                duration={5}
+                reverse
+              />
             </div>
-          )}
+            <AnimatedBeam
+              containerRef={outerContainerRef}
+              fromRef={userIconRef}
+              toRef={mainContainerRef}
+              duration={5}
+            />
+          </div>
         </div>
 
         {items.length > 0 && (
