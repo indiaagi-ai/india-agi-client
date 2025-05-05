@@ -26,7 +26,7 @@ export function HeroSectionOne() {
             </div>
           </motion.div>
           <h1 className="relative z-10 text-center md:text-left text-2xl font-bold text-slate-700 md:text-4xl lg:text-6xl dark:text-slate-300">
-            {"AI Consensus for India".split(" ").map((word, index) => (
+            {"AI Consensus".split(" ").map((word, index) => (
               <motion.span
                 key={index}
                 initial={{ opacity: 0, filter: "blur(4px)", y: 10 }}
@@ -55,12 +55,12 @@ export function HeroSectionOne() {
             }}
             className="relative z-10 py-4 text-center md:text-left text-lg font-normal text-neutral-600 dark:text-neutral-400"
           >
-            Get nuanced insights on Indian challenges through multiple AI
-            perspectives. Our platform brings together leading language
-            models—ChatGPT, Gemini, Claude, and Grok—specially optimized for
-            India-focused queries, delivering the most reliable consensus when
-            you ask targeted questions about Indian issues, policies, and
-            opportunities.
+            What makes IndiaAGI different from ChatGPT? ChatGPT gives you one
+            answer based on what it knows. IndiaAGI brings together four AIs —
+            ChatGPT, Gemini, Claude, and Grok — who debate and agree on the best
+            answer after 3 rounds. It's the only place where AIs work together
+            instead of competing. Want to see how it works? Just click “Explore
+            Now.”
           </motion.p>
           <motion.div
             initial={{
