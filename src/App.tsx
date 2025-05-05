@@ -6,6 +6,7 @@ import { HeroSectionOne } from "@/pages/home";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 interface ServerToClientEvents {
   onlineCount: (data: OnlineCount) => void;
@@ -23,11 +24,21 @@ function App() {
   const [onlineCount, setOnlineCount] = useState(0);
 
   useEffect(() => {
+    // Get or generate visitor ID
+    let visitorId = localStorage.getItem("visitor_id");
+    if (!visitorId) {
+      visitorId = uuidv4();
+      localStorage.setItem("visitor_id", visitorId);
+    }
+
     const socketInstance = io(import.meta.env.VITE_API_BASE_URL);
 
     // Set up event handlers
     socketInstance.on("connect", () => {
       console.log("Connected to WebSocket server");
+      socketInstance.emit("registerVisitor", {
+        visitorId,
+      });
     });
 
     socketInstance.on("disconnect", () => {

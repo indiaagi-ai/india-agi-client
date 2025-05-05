@@ -21,6 +21,7 @@ import { BoxReveal } from "@/components/magicui/box-reveal";
 import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
 import { v4 as randomUUID } from "uuid";
 import { motion } from "motion/react";
+import axios from "axios";
 
 export function SearchPage() {
   const [items, setItems] = useState<DebateHistory[]>([]);
@@ -93,7 +94,8 @@ export function SearchPage() {
     window.URL.revokeObjectURL(url);
   };
 
-  const handleShare = () => {
+  const handleShare = async () => {
+    await axios.post(`${import.meta.env.VITE_API_BASE_URL}test/log-share`);
     // Get the consensus text from items
     let consensus = "";
 
