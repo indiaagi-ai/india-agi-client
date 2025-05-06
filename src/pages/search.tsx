@@ -248,6 +248,7 @@ export function SearchPage() {
             }
           }}
           placeholder="Enter your query..."
+          autoFocus
         />
 
         {toolTipVisible && (
