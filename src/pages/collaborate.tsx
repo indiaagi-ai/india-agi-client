@@ -1,4 +1,4 @@
-import { Github } from "lucide-react";
+import { Github, ExternalLink } from "lucide-react";
 import { AuroraText } from "@/components/magicui/aurora-text";
 import { useEffect } from "react";
 
@@ -22,16 +22,29 @@ const CollaboratePage = () => {
       </div>
 
       <div className="prose prose-lg max-w-none">
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-lg mb-8 border border-blue-100">
-          <p className="text-lg italic">
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-lg mb-8 border border-blue-100 shadow-sm">
+          <p className="text-lg italic text-gray-700 mb-4">
             "I believe the next stage in improving trustworthiness will be the
             replacement of individual AI agents with cooperating teams of agents
             that continually fact-check each other and try to keep each other
             honest."
           </p>
-          <p className="text-right font-medium">
+          <p className="text-right font-medium text-gray-800">
             — Henry Kautz, Professor of Computer Science, University of Virginia
           </p>
+
+          <div className="mt-6 flex justify-end">
+            <a
+              href="https://gizmodo.com/ai-experts-say-were-on-the-wrong-path-to-achieving-human-like-ai-2000581717"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center text-indigo-600 hover:text-indigo-800 transition-colors text-sm"
+            >
+              Read full article: AI Experts Say We're on the Wrong Path to
+              Achieving Human-Like AI
+              <ExternalLink className="ml-1 h-4 w-4" />
+            </a>
+          </div>
         </div>
 
         <p className="mb-6">
@@ -106,12 +119,72 @@ const CollaboratePage = () => {
             </p>
             <p className="mt-2">For ideas, look up:</p>
             <ul className="list-disc pl-6 mt-2 space-y-1">
-              <li>AIs fail where Child succeeds</li>
-              <li>IndiaAGI: Evolution</li>
-              <li>IndiaAGI - Existential Threat</li>
-              <li>IndiaAGI: Bill Analysis Module</li>
-              <li>IndiaAGI – Authors Corner</li>
-              <li>IndiaAGI: Emulate Emergence</li>
+              <li>
+                <a
+                  href="https://myblogepage.blogspot.com/2025/03/ais-fail-where-child-succeeds.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-indigo-600 hover:text-indigo-800 flex items-center"
+                >
+                  AIs fail where Child succeeds
+                  <ExternalLink className="ml-1 h-3 w-3" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://myblogepage.blogspot.com/2025/04/indiaagi-evolution.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-indigo-600 hover:text-indigo-800 flex items-center"
+                >
+                  IndiaAGI: Evolution
+                  <ExternalLink className="ml-1 h-3 w-3" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://myblogepage.blogspot.com/2025/04/indiaagi-existential-threat.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-indigo-600 hover:text-indigo-800 flex items-center"
+                >
+                  IndiaAGI - Existential Threat
+                  <ExternalLink className="ml-1 h-3 w-3" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://myblogepage.blogspot.com/2025/04/indiaagi-bill-analysis-module.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-indigo-600 hover:text-indigo-800 flex items-center"
+                >
+                  IndiaAGI: Bill Analysis Module
+                  <ExternalLink className="ml-1 h-3 w-3" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://myblogepage.blogspot.com/2025/04/indiaagi-authors-corner.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-indigo-600 hover:text-indigo-800 flex items-center"
+                >
+                  IndiaAGI – Authors Corner
+                  <ExternalLink className="ml-1 h-3 w-3" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://myblogepage.blogspot.com/2025/04/indiaagi-emulate-emergence.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-indigo-600 hover:text-indigo-800 flex items-center"
+                >
+                  IndiaAGI: Emulate Emergence
+                  <ExternalLink className="ml-1 h-3 w-3" />
+                </a>
+              </li>
             </ul>
           </div>
 
