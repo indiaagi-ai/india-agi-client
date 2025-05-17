@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ChevronRightIcon } from "lucide-react";
 import { WavyBackground } from "@/components/ui/wavy-background";
 import video from "@/assets/video.mp4";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 export function HeroSectionOne() {
   const navigate = useNavigate();
@@ -84,6 +85,18 @@ export function HeroSectionOne() {
               <span className="inline-flex items-center">
                 Explore Now
                 <ChevronRightIcon className="ml-1 size-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </span>
+            </button>
+
+            <button
+              onClick={() => {
+                navigate("/contribute");
+              }}
+              className="group w-60 transform rounded-lg border-2 border-black bg-white px-6 py-2 font-medium text-black transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-100 dark:border-white dark:bg-black dark:text-white dark:hover:bg-gray-900 hover:cursor-pointer"
+            >
+              <span className="inline-flex items-center">
+                Contribute
+                <GitHubLogoIcon className="ml-1 size-4 transition-transform duration-300 group-hover:translate-x-1" />
               </span>
             </button>
           </motion.div>

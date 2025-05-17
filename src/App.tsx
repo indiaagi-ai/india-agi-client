@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { HeroSectionOne } from "@/pages/home";
 import Header from "@/components/header";
+import CollaboratePage from "@/pages/collaborate";
 import Footer from "@/components/footer";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
@@ -83,6 +84,15 @@ function App() {
                 <>
                   <Header count={onlineCount} />
                   <SearchPage />
+                </>
+              }
+            />
+            <Route
+              path="/contribute"
+              element={
+                <>
+                  <Header count={onlineCount} />
+                  <CollaboratePage />
                 </>
               }
             />
