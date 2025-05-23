@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import { SearchPage } from "@/pages/search";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { HeroSectionOne } from "@/pages/home";
 import Header from "@/components/header";
@@ -8,6 +8,7 @@ import CollaboratePage from "@/pages/collaborate";
 import Footer from "@/components/footer";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { useTranslation } from "react-i18next";
 
 interface ServerToClientEvents {
   onlineCount: (data: OnlineCount) => void;
@@ -18,11 +19,24 @@ export interface OnlineCount {
   count: number;
 }
 
+export interface HeaderProps {
+  count: number;
+  selectedLanguage: string;
+  setSelectedLanguage: Dispatch<SetStateAction<string>>;
+}
+
 function App() {
   const [socket, setSocket] = useState<Socket<ServerToClientEvents> | null>(
     null
   );
   const [onlineCount, setOnlineCount] = useState(0);
+  const [selectedLanguage, setSelectedLanguage] = useState("hi");
+
+  const { i18n } = useTranslation("header");
+
+  useEffect(() => {
+    i18n.changeLanguage(selectedLanguage);
+  }, [i18n, selectedLanguage]);
 
   useEffect(() => {
     // Get or generate visitor ID
@@ -73,7 +87,11 @@ function App() {
               path="/"
               element={
                 <>
-                  <Header count={onlineCount} />
+                  <Header
+                    count={onlineCount}
+                    selectedLanguage={selectedLanguage}
+                    setSelectedLanguage={setSelectedLanguage}
+                  />
                   <HeroSectionOne />
                 </>
               }
@@ -82,7 +100,11 @@ function App() {
               path="/trynow"
               element={
                 <>
-                  <Header count={onlineCount} />
+                  <Header
+                    count={onlineCount}
+                    selectedLanguage={selectedLanguage}
+                    setSelectedLanguage={setSelectedLanguage}
+                  />
                   <SearchPage />
                 </>
               }
@@ -91,7 +113,11 @@ function App() {
               path="/contribute"
               element={
                 <>
-                  <Header count={onlineCount} />
+                  <Header
+                    count={onlineCount}
+                    selectedLanguage={selectedLanguage}
+                    setSelectedLanguage={setSelectedLanguage}
+                  />
                   <CollaboratePage />
                 </>
               }

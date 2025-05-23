@@ -22,6 +22,7 @@ import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-b
 import { v4 as randomUUID } from "uuid";
 import { motion } from "motion/react";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 export function SearchPage() {
   const [items, setItems] = useState<DebateHistory[]>([]);
@@ -31,6 +32,8 @@ export function SearchPage() {
   const [round, setRound] = useState<number>(1);
   const [toolTipVisible, setToolTipVisible] = useState<boolean>(false);
   const ROUNDS = 3;
+
+  const { t } = useTranslation("search");
 
   const providers = [
     { id: Provider.OpenAI, icon: OpenAISvg },
@@ -247,7 +250,7 @@ export function SearchPage() {
               research();
             }
           }}
-          placeholder="Enter your query..."
+          placeholder={t("searchPlaceholder")}
           autoFocus
         />
 
@@ -261,19 +264,14 @@ export function SearchPage() {
           >
             <div className="w-full">
               <div className="bg-blue-600 text-white p-3 rounded-lg shadow-lg max-w-xs">
-                <p className="font-medium text-sm mb-2">
-                  Experience AI collaboration in action!
-                </p>
-                <p className="text-xs mb-3">
-                  Ask a question to see Claude, ChatGPT, Gemini and Grok discuss
-                  your query and provide a consensus answer.
-                </p>
+                <p className="font-medium text-sm mb-2">{t("toolTipTitle")}</p>
+                <p className="text-xs mb-3">{t("toolTipSubtitle")}</p>
                 <div className="flex justify-between items-center">
                   <button
                     onClick={handleTooltipDismiss}
                     className="bg-white text-blue-600 px-2 py-1 rounded text-xs font-medium hover:cursor-pointer"
                   >
-                    Okay
+                    {t("toolTipButton")}
                   </button>
                 </div>
               </div>
@@ -289,7 +287,7 @@ export function SearchPage() {
           ) : (
             <>
               <GlobeIcon className="mr-2 h-4 w-4" />
-              Research
+              {t("researchButton")}
             </>
           )}
         </Button>
@@ -330,7 +328,7 @@ export function SearchPage() {
                 <div className="absolute -top-3 left-4 px-2 bg-[#faf9f5] font-medium z-20 flex items-center gap-2">
                   <LoopIcon />
                   <BoxReveal boxColor={"#5046e6"} duration={0.5} key={round}>
-                    <>Round: {round}</>
+                    <>{`${t("flowRoundLabel")} ${round}`}</>
                   </BoxReveal>
                 </div>
                 {/* Render the circles first */}
@@ -386,7 +384,7 @@ export function SearchPage() {
                     />
                   )}
                   <img src={XAISvg} className="rounded-full p-3 h-16 w-16" />
-                  <span>Consensus Engine</span>
+                  <span>{t("consensusEngine")}</span>
                 </div>
               </div>
               <AnimatedBeam

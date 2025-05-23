@@ -1,0 +1,9 @@
+{
+  "searchPlaceholder": "നിങ്ങളുടെ ചോദ്യമിടുക...",
+  "toolTipTitle": "AI സഹകരണം പ്രവർത്തനത്തിൽ അനുഭവപ്പെടൂ!",
+  "toolTipSubtitle": "Claude, ChatGPT, Gemini, Grok എന്നിവർ നിങ്ങളുടെ ചോദ്യത്തിൽ ചർച്ച ചെയ്ത് ഏകോപിതമായ ഉത്തരം നൽകുന്നത് കാണാൻ ഒരു ചോദ്യം ചോദിക്കൂ.",
+  "toolTipButton": "ശരി",
+  "researchButton": "ഗവേഷിക്കുക",
+  "flowRoundLabel": "റൗണ്ട്: ",
+  "consensusEngine": "ഏകോപന എഞ്ചിൻ"
+}
