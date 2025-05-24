@@ -43,6 +43,22 @@ function App() {
   }, [i18n, selectedLanguage]);
 
   useEffect(() => {
+    let language = localStorage.getItem("language");
+    if (!language) {
+      language = navigator.language;
+      language = language.split("-")[0];
+      console.log(`setting language: ${language} (first render)`);
+      localStorage.setItem("language", language);
+    }
+    setSelectedLanguage(language);
+  }, []);
+
+  useEffect(() => {
+    console.log(`setting language: ${selectedLanguage}`);
+    localStorage.setItem("language", selectedLanguage);
+  }, [selectedLanguage]);
+
+  useEffect(() => {
     // Get or generate visitor ID
     let visitorId = localStorage.getItem("visitor_id");
     if (!visitorId) {

@@ -54,6 +54,16 @@ import card_gu from "@/locales/gu/card.json";
 import card_kn from "@/locales/kn/card.json";
 import card_ml from "@/locales/ml/card.json";
 
+import footer_en from "@/locales/en/footer.json";
+import footer_hi from "@/locales/hi/footer.json";
+import footer_bn from "@/locales/bn/footer.json";
+import footer_te from "@/locales/te/footer.json";
+import footer_mr from "@/locales/mr/footer.json";
+import footer_ta from "@/locales/ta/footer.json";
+import footer_gu from "@/locales/gu/footer.json";
+import footer_kn from "@/locales/kn/footer.json";
+import footer_ml from "@/locales/ml/footer.json";
+
 i18n.use(initReactI18next).init({
   interpolation: { escapeValue: false },
   lng: "hi",
@@ -64,6 +74,7 @@ i18n.use(initReactI18next).init({
       header: header_en,
       search: search_en,
       card: card_en,
+      footer: footer_en,
     },
     hi: {
       home: home_hi,
@@ -71,6 +82,7 @@ i18n.use(initReactI18next).init({
       header: header_hi,
       search: search_hi,
       card: card_hi,
+      footer: footer_hi,
     },
     bn: {
       home: home_bn,
@@ -78,6 +90,7 @@ i18n.use(initReactI18next).init({
       header: header_bn,
       search: search_bn,
       card: card_bn,
+      footer: footer_bn,
     },
     te: {
       home: home_te,
@@ -85,6 +98,7 @@ i18n.use(initReactI18next).init({
       header: header_te,
       search: search_te,
       card: card_te,
+      footer: footer_te,
     },
     mr: {
       home: home_mr,
@@ -92,6 +106,7 @@ i18n.use(initReactI18next).init({
       header: header_mr,
       search: search_mr,
       card: card_mr,
+      footer: footer_mr,
     },
     ta: {
       home: home_ta,
@@ -99,6 +114,7 @@ i18n.use(initReactI18next).init({
       header: header_ta,
       search: search_ta,
       card: card_ta,
+      footer: footer_ta,
     },
     gu: {
       home: home_gu,
@@ -106,6 +122,7 @@ i18n.use(initReactI18next).init({
       header: header_gu,
       search: search_gu,
       card: card_gu,
+      footer: footer_gu,
     },
     kn: {
       home: home_kn,
@@ -113,6 +130,7 @@ i18n.use(initReactI18next).init({
       header: header_kn,
       search: search_kn,
       card: card_kn,
+      footer: footer_kn,
     },
     ml: {
       home: home_ml,
@@ -120,6 +138,7 @@ i18n.use(initReactI18next).init({
       header: header_ml,
       search: search_ml,
       card: card_ml,
+      footer: footer_ml,
     },
   },
 });
