@@ -23,8 +23,10 @@ import { v4 as randomUUID } from "uuid";
 import { motion } from "motion/react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import { SearchProps } from "@/App";
+import translate from "translate";
 
-export function SearchPage() {
+export function SearchPage({ selectedLanguage }: SearchProps) {
   const [items, setItems] = useState<DebateHistory[]>([]);
   const [searchText, setSearchText] = useState<string>("");
   const [researching, setResearching] = useState<boolean>(false);
@@ -187,7 +189,7 @@ export function SearchPage() {
       );
 
       // Handle messages
-      eventSource.onmessage = ({ data }) => {
+      eventSource.onmessage = async ({ data }) => {
         const historyItem: DebateHistory = JSON.parse(data);
         switch (historyItem.model) {
           case "OpenAI":
@@ -214,6 +216,45 @@ export function SearchPage() {
             setRound(historyItem.roundNumber + 1);
           }
         } else if (historyItem.type !== "ProviderUpdate") {
+          if (
+            selectedLanguage !== "en" &&
+            historyItem.type == "TextResponse" &&
+            historyItem.response
+          ) {
+            historyItem.response = await translate(historyItem.response, {
+              to: selectedLanguage,
+            });
+          } else if (
+            selectedLanguage !== "en" &&
+            historyItem.type == "InternetSearch" &&
+            historyItem.internetSearch
+          ) {
+            historyItem.internetSearch.searchQuery = await translate(
+              historyItem.internetSearch.searchQuery,
+              {
+                to: selectedLanguage,
+              }
+            );
+            await Promise.all(
+              historyItem.internetSearch.searchResponse.map(
+                async (searchResult) => {
+                  const [title, snippet, content] = await Promise.all([
+                    translate(searchResult.title, { to: selectedLanguage }),
+                    translate(searchResult.snippet, { to: selectedLanguage }),
+                    searchResult.content
+                      ? translate(searchResult.content, {
+                          to: selectedLanguage,
+                        })
+                      : Promise.resolve(null),
+                  ]);
+
+                  searchResult.title = title;
+                  searchResult.snippet = snippet;
+                  if (content) searchResult.content = content;
+                }
+              )
+            );
+          }
           setItems((prevVal) => [...prevVal, historyItem]);
         }
       };

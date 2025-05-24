@@ -25,12 +25,16 @@ export interface HeaderProps {
   setSelectedLanguage: Dispatch<SetStateAction<string>>;
 }
 
+export interface SearchProps {
+  selectedLanguage: string;
+}
+
 function App() {
   const [socket, setSocket] = useState<Socket<ServerToClientEvents> | null>(
     null
   );
   const [onlineCount, setOnlineCount] = useState(0);
-  const [selectedLanguage, setSelectedLanguage] = useState("hi");
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
 
   const { i18n } = useTranslation("header");
 
@@ -105,7 +109,7 @@ function App() {
                     selectedLanguage={selectedLanguage}
                     setSelectedLanguage={setSelectedLanguage}
                   />
-                  <SearchPage />
+                  <SearchPage selectedLanguage={selectedLanguage} />
                 </>
               }
             />

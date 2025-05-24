@@ -16,9 +16,11 @@ import OpenAISvg from "@/assets/openai.svg";
 import GoogleSvg from "@/assets/google.svg";
 import AnthropicSvg from "@/assets/anthropic.svg";
 import XAISvg from "@/assets/xai.svg";
+import { useTranslation } from "react-i18next";
 
 export function ExpandableCard({ item }: { item: DebateHistory }) {
   const [expanded, setExpanded] = useState(false);
+  const { t } = useTranslation("card");
 
   const getModelName = (
     provider: "OpenAI" | "Anthropic" | "Google" | "xAI" | "Groq"
@@ -92,11 +94,11 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
       | "FinalConsensusButtons"
   ) => {
     if (historyType === "InternetSearch") {
-      return "searched the Internet";
+      return t("searchedInternet");
     } else if (provider === "xAI") {
-      return "provided a consensus response";
+      return t("consensusResponse");
     } else {
-      return "replied";
+      return t("replied");
     }
   };
 
@@ -138,7 +140,7 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
                 <div className="space-y-2">
                   <BoxReveal boxColor={"#5046e6"} duration={0.5}>
                     <p className="text-sm font-medium font-fira_code">
-                      Search query: "{item.internetSearch.searchQuery}"
+                      {`${t("searchQuery")} ${item.internetSearch.searchQuery}`}
                     </p>
                   </BoxReveal>
                   <div className="space-y-3 mt-2">
@@ -184,8 +186,9 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
                     {!expanded &&
                       item.internetSearch.searchResponse.length > 2 && (
                         <p className="text-xs text-gray-500">
-                          + {item.internetSearch.searchResponse.length - 2} more
-                          results
+                          {`+ ${
+                            item.internetSearch.searchResponse.length - 2
+                          } ${t("moreResults")}`}
                         </p>
                       )}
                   </div>
@@ -215,11 +218,11 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
             >
               {expanded ? (
                 <>
-                  <ChevronUp className="h-4 w-4" /> Show less
+                  <ChevronUp className="h-4 w-4" /> {t("showLess")}
                 </>
               ) : (
                 <>
-                  <ChevronDown className="h-4 w-4" /> Show more
+                  <ChevronDown className="h-4 w-4" /> {t("showMore")}
                 </>
               )}
             </Button>

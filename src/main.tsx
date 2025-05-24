@@ -44,6 +44,16 @@ import search_gu from "@/locales/gu/search.json";
 import search_kn from "@/locales/kn/search.json";
 import search_ml from "@/locales/ml/search.json";
 
+import card_en from "@/locales/en/card.json";
+import card_hi from "@/locales/hi/card.json";
+import card_bn from "@/locales/bn/card.json";
+import card_te from "@/locales/te/card.json";
+import card_mr from "@/locales/mr/card.json";
+import card_ta from "@/locales/ta/card.json";
+import card_gu from "@/locales/gu/card.json";
+import card_kn from "@/locales/kn/card.json";
+import card_ml from "@/locales/ml/card.json";
+
 i18n.use(initReactI18next).init({
   interpolation: { escapeValue: false },
   lng: "hi",
@@ -53,54 +63,63 @@ i18n.use(initReactI18next).init({
       collaborate: collaborate_en,
       header: header_en,
       search: search_en,
+      card: card_en,
     },
     hi: {
       home: home_hi,
       collaborate: collaborate_hi,
       header: header_hi,
       search: search_hi,
+      card: card_hi,
     },
     bn: {
       home: home_bn,
       collaborate: collaborate_bn,
       header: header_bn,
       search: search_bn,
+      card: card_bn,
     },
     te: {
       home: home_te,
       collaborate: collaborate_te,
       header: header_te,
       search: search_te,
+      card: card_te,
     },
     mr: {
       home: home_mr,
       collaborate: collaborate_mr,
       header: header_mr,
       search: search_mr,
+      card: card_mr,
     },
     ta: {
       home: home_ta,
       collaborate: collaborate_ta,
       header: header_ta,
       search: search_ta,
+      card: card_ta,
     },
     gu: {
       home: home_gu,
       collaborate: collaborate_gu,
       header: header_gu,
       search: search_gu,
+      card: card_gu,
     },
     kn: {
       home: home_kn,
       collaborate: collaborate_kn,
       header: header_kn,
       search: search_kn,
+      card: card_kn,
     },
     ml: {
       home: home_ml,
       collaborate: collaborate_ml,
       header: header_ml,
       search: search_ml,
+      card: card_ml,
     },
   },
 });

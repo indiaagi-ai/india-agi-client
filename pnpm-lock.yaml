@@ -74,6 +74,9 @@ importers:
       tailwindcss:
         specifier: ^4.1.3
         version: 4.1.3
+      translate:
+        specifier: ^3.0.1
+        version: 3.0.1
       tw-animate-css:
         specifier: ^1.2.5
         version: 1.2.5
@@ -2009,6 +2012,9 @@ packages:
   to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
+
+  translate@3.0.1:
+    resolution: {integrity: sha512-ZePIRh2uuN7ofL6V2KfRh71525pwPCC8CtoWJg29tQcr3vhGTFXzz2nYG+rmRxlZ5PCcMza/GDXqxLFx5omVpQ==}
 
   trim-lines@3.0.1:
     resolution: {integrity: sha512-kRj8B+YHZCc9kQYdWfJB2/oUl9rA99qbowYYBtr4ui4mZyAQ2JpvVBd/6U2YloATfqBhBTSMhTpgBHtU0Mf3Rg==}
@@ -4110,6 +4116,8 @@ snapshots:
   to-regex-range@5.0.1:
     dependencies:
       is-number: 7.0.0
+
+  translate@3.0.1: {}
 
   trim-lines@3.0.1: {}
 
