@@ -25,6 +25,10 @@ import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { SearchProps } from "@/App";
 import translate from "translate";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
+import { MicIcon } from "lucide-react";
 
 export function SearchPage({ selectedLanguage }: SearchProps) {
   const [items, setItems] = useState<DebateHistory[]>([]);
@@ -54,6 +58,8 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
 
   const userIconRef = useRef<HTMLDivElement>(null);
   const userQueryRef = useRef<HTMLDivElement>(null);
+
+  const { transcript, listening, resetTranscript } = useSpeechRecognition({});
 
   const getModelRef = (provider: Provider) => {
     switch (provider) {
@@ -168,11 +174,24 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
     );
   });
 
+  useEffect(() => {
+    resetTranscript();
+  }, [resetTranscript]);
+
   const research = async () => {
     if (searchText.length === 0) {
       return;
     }
 
+    let translatedSearchText = searchText;
+    if (selectedLanguage !== "en") {
+      translatedSearchText = await translate(searchText, {
+        from: selectedLanguage,
+        to: "en",
+      });
+    }
+
+    SpeechRecognition.stopListening();
     setResearching(true);
     setItems([]);
     setProvider(Provider.OpenAI);
@@ -185,7 +204,9 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
       const eventSource = new EventSource(
         `${
           import.meta.env.VITE_API_BASE_URL
-        }test/sse?question=${encodeURIComponent(searchText)}&rounds=${ROUNDS}`
+        }test/sse?question=${encodeURIComponent(
+          translatedSearchText
+        )}&rounds=${ROUNDS}`
       );
 
       // Handle messages
@@ -278,22 +299,71 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
     }
   };
 
+  useEffect(() => {
+    if (transcript.length === 0) {
+      return;
+    }
+    setSearchText(transcript);
+  }, [transcript]);
+
   return (
     <div className="flex flex-col gap-5 w-full max-w-6xl">
       <div className="relative flex flex-col items-center space-x-2 space-y-2 md:flex-row md:space-y-0">
-        <Input
-          type="search"
-          value={searchText}
-          disabled={researching}
-          onChange={(e) => setSearchText(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              research();
-            }
-          }}
-          placeholder={t("searchPlaceholder")}
-          autoFocus
-        />
+        <div className="relative flex-1 flex items-center">
+          <Input
+            type="search"
+            value={searchText}
+            disabled={researching}
+            onChange={(e) => {
+              if (!listening) {
+                setSearchText(e.target.value);
+              }
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                research();
+              }
+            }}
+            placeholder={t("searchPlaceholder")}
+            autoFocus
+            className="pr-12"
+          />
+
+          {/* Voice Input Button */}
+
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className={cn(
+              "absolute right-2 h-8 w-8 p-0",
+              listening && "bg-red-100 text-red-600"
+            )}
+            onClick={() => {
+              if (listening) {
+                SpeechRecognition.stopListening();
+              } else {
+                SpeechRecognition.startListening({
+                  language: selectedLanguage,
+                  continuous: true,
+                });
+              }
+            }}
+            disabled={researching}
+            title={listening ? "Stop listening" : "Start voice input"}
+          >
+            {listening ? (
+              <motion.div
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ repeat: Infinity, duration: 1 }}
+              >
+                <MicIcon className="h-4 w-4" />
+              </motion.div>
+            ) : (
+              <MicIcon className="h-4 w-4" />
+            )}
+          </Button>
+        </div>
 
         {toolTipVisible && (
           <motion.div

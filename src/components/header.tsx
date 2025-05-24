@@ -1,5 +1,5 @@
 import { HeaderProps } from "@/App";
-import { Users, Globe, Check, ChevronDown, LanguagesIcon } from "lucide-react";
+import { Users, Check, ChevronDown, LanguagesIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { AuroraText } from "@/components/magicui/aurora-text";
 import { useState, useRef, useEffect } from "react";
