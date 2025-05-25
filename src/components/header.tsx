@@ -5,37 +5,7 @@ import { AuroraText } from "@/components/magicui/aurora-text";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-
-// Language data - organized by region
-const languages = {
-  indian: [
-    { code: "en", name: "English", englishName: "English" },
-    { code: "hi", name: "हिंदी", englishName: "Hindi" },
-    { code: "bn", name: "বাংলা", englishName: "Bengali" },
-    { code: "te", name: "తెలుగు", englishName: "Telugu" },
-    { code: "mr", name: "मराठी", englishName: "Marathi" },
-    { code: "ta", name: "தமிழ்", englishName: "Tamil" },
-    { code: "gu", name: "ગુજરાતી", englishName: "Gujarati" },
-    { code: "kn", name: "ಕನ್ನಡ", englishName: "Kannada" },
-    { code: "ml", name: "മലയാളം", englishName: "Malayalam" },
-  ],
-  international: [
-    { code: "en", name: "English", englishName: "English" },
-    // { code: "zh", name: "中文", englishName: "Chinese" },
-    // { code: "ar", name: "العربية", englishName: "Arabic" },
-    // { code: "es", name: "Español", englishName: "Spanish" },
-    // { code: "fr", name: "Français", englishName: "French" },
-    // { code: "de", name: "Deutsch", englishName: "German" },
-    // { code: "ja", name: "日本語", englishName: "Japanese" },
-    // { code: "ko", name: "한국어", englishName: "Korean" },
-    // { code: "pt", name: "Português", englishName: "Portuguese" },
-    // { code: "ru", name: "Русский", englishName: "Russian" },
-    // { code: "it", name: "Italiano", englishName: "Italian" },
-    // { code: "tr", name: "Türkçe", englishName: "Turkish" },
-    // { code: "th", name: "ไทย", englishName: "Thai" },
-    // { code: "vi", name: "Tiếng Việt", englishName: "Vietnamese" },
-  ],
-};
+import { languages } from "@/utils";
 
 const Header = ({
   count,

@@ -29,6 +29,7 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { MicIcon } from "lucide-react";
+import { getLanguageCodeWithCountry } from "@/utils";
 
 export function SearchPage({ selectedLanguage }: SearchProps) {
   const [items, setItems] = useState<DebateHistory[]>([]);
@@ -178,8 +179,8 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
     } else {
       console.log("start listening...");
       SpeechRecognition.startListening({
-        language: selectedLanguage,
-        continuous: false,
+        language: getLanguageCodeWithCountry(selectedLanguage),
+        continuous: true,
       });
     }
   }, [listening, selectedLanguage]);
