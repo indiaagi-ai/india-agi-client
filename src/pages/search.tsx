@@ -59,7 +59,14 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
   const userIconRef = useRef<HTMLDivElement>(null);
   const userQueryRef = useRef<HTMLDivElement>(null);
 
-  const { transcript, listening, resetTranscript } = useSpeechRecognition({});
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    isMicrophoneAvailable,
+    browserSupportsSpeechRecognition,
+    browserSupportsContinuousListening,
+  } = useSpeechRecognition({});
 
   const getModelRef = (provider: Provider) => {
     switch (provider) {
@@ -178,6 +185,20 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
     resetTranscript();
   }, [resetTranscript]);
 
+  useEffect(() => {
+    console.log(`isMicrophoneAvailable ${isMicrophoneAvailable}`);
+    console.log(
+      `browserSupportsSpeechRecognition ${browserSupportsSpeechRecognition}`
+    );
+    console.log(
+      `browserSupportsContinuousListening ${browserSupportsContinuousListening}`
+    );
+  }, [
+    browserSupportsContinuousListening,
+    browserSupportsSpeechRecognition,
+    isMicrophoneAvailable,
+  ]);
+
   const research = async () => {
     if (searchText.length === 0) {
       return;
@@ -190,7 +211,7 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
         to: "en",
       });
     }
-
+    console.log("stop listening... (research button clicked)");
     SpeechRecognition.stopListening();
     setResearching(true);
     setItems([]);
@@ -341,8 +362,10 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
             )}
             onClick={() => {
               if (listening) {
+                console.log("stop listening...");
                 SpeechRecognition.stopListening();
               } else {
+                console.log("start listening...");
                 SpeechRecognition.startListening({
                   language: selectedLanguage,
                   continuous: true,
