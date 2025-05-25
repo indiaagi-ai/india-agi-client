@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { GlobeIcon } from "@radix-ui/react-icons";
 import { AnimatedList } from "@/components/magicui/animated-list";
-import { useState, useRef, forwardRef, useEffect } from "react";
+import { useState, useRef, forwardRef, useEffect, useCallback } from "react";
 import { DebateHistory, Provider } from "@/interfaces";
 import { ExpandableCard } from "@/components/expandable-card";
 import { Spinner } from "@/components/ui/spinner";
@@ -149,6 +149,13 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
     } else {
       setToolTipVisible(tooltipSetting === "true");
     }
+
+    const originalStartListening = SpeechRecognition.startListening;
+
+    SpeechRecognition.startListening = function (...args) {
+      console.log("[Monkey Patch] startListening called with args:", args);
+      return originalStartListening.apply(this, args);
+    };
   }, []);
 
   const handleTooltipDismiss = () => {
@@ -163,6 +170,19 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
       setToolTipVisible(tooltipSetting === "true");
     }
   }, [searchText]);
+
+  const handleMicIconButtonClick = useCallback(() => {
+    if (listening) {
+      console.log("stop listening...");
+      SpeechRecognition.stopListening();
+    } else {
+      console.log("start listening...");
+      SpeechRecognition.startListening({
+        language: selectedLanguage,
+        continuous: true,
+      });
+    }
+  }, [listening, selectedLanguage]);
 
   const Circle = forwardRef<
     HTMLDivElement,
@@ -364,18 +384,7 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
               "absolute right-2 h-8 w-8 p-0",
               listening && "bg-red-100 text-red-600"
             )}
-            onClick={() => {
-              if (listening) {
-                console.log("stop listening...");
-                SpeechRecognition.stopListening();
-              } else {
-                console.log("start listening...");
-                SpeechRecognition.startListening({
-                  language: selectedLanguage,
-                  continuous: false,
-                });
-              }
-            }}
+            onClick={handleMicIconButtonClick}
             disabled={researching}
             title={listening ? "Stop listening" : "Start voice input"}
           >
