@@ -327,6 +327,10 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
     setSearchText(transcript);
   }, [transcript]);
 
+  useEffect(() => {
+    console.log(`listening ${listening}`);
+  }, [listening]);
+
   return (
     <div className="flex flex-col gap-5 w-full max-w-6xl">
       <div className="relative flex flex-col items-center space-x-2 space-y-2 md:flex-row md:space-y-0">
@@ -368,7 +372,7 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
                 console.log("start listening...");
                 SpeechRecognition.startListening({
                   language: selectedLanguage,
-                  continuous: true,
+                  continuous: false,
                 });
               }
             }}
