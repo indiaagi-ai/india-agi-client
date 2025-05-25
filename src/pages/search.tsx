@@ -179,7 +179,7 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
       console.log("start listening...");
       SpeechRecognition.startListening({
         language: selectedLanguage,
-        continuous: true,
+        continuous: false,
       });
     }
   }, [listening, selectedLanguage]);
