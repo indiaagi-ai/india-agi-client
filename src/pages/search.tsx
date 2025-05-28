@@ -46,7 +46,7 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
   const [round, setRound] = useState<number>(1);
   const [toolTipVisible, setToolTipVisible] = useState<boolean>(false);
   const [currentAudio, setCurrentAudio] = useState<string | undefined>();
-  const ROUNDS = 1;
+  const ROUNDS = 3;
 
   const { t } = useTranslation("search");
 
