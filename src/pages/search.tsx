@@ -21,15 +21,22 @@ import { BoxReveal } from "@/components/magicui/box-reveal";
 import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
 import { v4 as randomUUID } from "uuid";
 import { motion } from "motion/react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useTranslation } from "react-i18next";
 import { SearchProps } from "@/App";
 import translate from "translate";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import { MicIcon } from "lucide-react";
-import { getLanguageCodeWithCountry } from "@/utils";
+import { MicIcon, XCircleIcon } from "lucide-react";
+import { getEnglishName, getLanguageCodeWithCountry, getVoice } from "@/utils";
+import ReactAudioPlayer from "react-audio-player";
+
+interface TTSRequest {
+  text: string;
+  languageCode: string;
+  voiceName: string;
+}
 
 export function SearchPage({ selectedLanguage }: SearchProps) {
   const [items, setItems] = useState<DebateHistory[]>([]);
@@ -38,7 +45,8 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
   const [provider, setProvider] = useState<Provider | null>(null);
   const [round, setRound] = useState<number>(1);
   const [toolTipVisible, setToolTipVisible] = useState<boolean>(false);
-  const ROUNDS = 3;
+  const [currentAudio, setCurrentAudio] = useState<string | undefined>();
+  const ROUNDS = 1;
 
   const { t } = useTranslation("search");
 
@@ -154,7 +162,6 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
     const originalStartListening = SpeechRecognition.startListening;
 
     SpeechRecognition.startListening = function (...args) {
-      console.log("[Monkey Patch] startListening called with args:", args);
       return originalStartListening.apply(this, args);
     };
   }, []);
@@ -184,6 +191,43 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
       });
     }
   }, [listening, selectedLanguage]);
+
+  useEffect(() => {
+    resetTranscript();
+    setSearchText("");
+    setRound(1);
+    setResearching(false);
+    setItems([]);
+  }, [resetTranscript, selectedLanguage]);
+
+  const generateTTS = async (text: string): Promise<void> => {
+    try {
+      setCurrentAudio("loading");
+      const languageCode = getLanguageCodeWithCountry(selectedLanguage);
+
+      const ttsResponse: AxiosResponse<Blob> = await axios.post<Blob>(
+        `${import.meta.env.VITE_API_BASE_URL}test/convert`,
+        {
+          text,
+          languageCode,
+          voiceName: getVoice(languageCode),
+        } as TTSRequest,
+        {
+          responseType: "blob",
+        }
+      );
+
+      const audioUrl: string = URL.createObjectURL(
+        new Blob([ttsResponse.data], { type: "audio/mp3" })
+      );
+
+      setCurrentAudio(audioUrl);
+    } catch (error) {
+      setCurrentAudio(undefined);
+      console.error("TTS API call failed:", error);
+      throw error;
+    }
+  };
 
   const Circle = forwardRef<
     HTMLDivElement,
@@ -232,7 +276,6 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
         to: "en",
       });
     }
-    console.log("stop listening... (research button clicked)");
     SpeechRecognition.stopListening();
     setResearching(true);
     setItems([]);
@@ -254,6 +297,8 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
       // Handle messages
       eventSource.onmessage = async ({ data }) => {
         const historyItem: DebateHistory = JSON.parse(data);
+
+        // Set provider based on model
         switch (historyItem.model) {
           case "OpenAI":
             setProvider(Provider.OpenAI);
@@ -268,57 +313,84 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
             setProvider(Provider.xAI);
             break;
         }
-        if (historyItem.type === "RoundUpdate" && historyItem.roundNumber) {
-          if (historyItem.roundNumber === ROUNDS) {
-            const finalConsensusButtons: DebateHistory = {
-              type: "FinalConsensusButtons",
-              model: "xAI",
-            };
-            setItems((prevVal) => [...prevVal, finalConsensusButtons]);
-          } else {
-            setRound(historyItem.roundNumber + 1);
-          }
-        } else if (historyItem.type !== "ProviderUpdate") {
-          if (
-            selectedLanguage !== "en" &&
-            historyItem.type == "TextResponse" &&
-            historyItem.response
-          ) {
-            historyItem.response = await translate(historyItem.response, {
-              to: selectedLanguage,
-            });
-          } else if (
-            selectedLanguage !== "en" &&
-            historyItem.type == "InternetSearch" &&
-            historyItem.internetSearch
-          ) {
-            historyItem.internetSearch.searchQuery = await translate(
-              historyItem.internetSearch.searchQuery,
-              {
-                to: selectedLanguage,
-              }
-            );
-            await Promise.all(
-              historyItem.internetSearch.searchResponse.map(
-                async (searchResult) => {
-                  const [title, snippet, content] = await Promise.all([
-                    translate(searchResult.title, { to: selectedLanguage }),
-                    translate(searchResult.snippet, { to: selectedLanguage }),
-                    searchResult.content
-                      ? translate(searchResult.content, {
-                          to: selectedLanguage,
-                        })
-                      : Promise.resolve(null),
-                  ]);
 
-                  searchResult.title = title;
-                  searchResult.snippet = snippet;
-                  if (content) searchResult.content = content;
-                }
-              )
-            );
-          }
-          setItems((prevVal) => [...prevVal, historyItem]);
+        // Handle different item types
+        switch (historyItem.type) {
+          case "RoundUpdate":
+            if (historyItem.roundNumber) {
+              if (historyItem.roundNumber === ROUNDS) {
+                const finalConsensusButtons: DebateHistory = {
+                  type: "FinalConsensusButtons",
+                  model: "xAI",
+                };
+                setItems((prevVal) => [...prevVal, finalConsensusButtons]);
+              } else {
+                setRound(historyItem.roundNumber + 1);
+              }
+            }
+            break;
+
+          case "ProviderUpdate":
+            // Do nothing for provider updates
+            break;
+
+          case "TextResponse":
+            if (selectedLanguage !== "en" && historyItem.response) {
+              historyItem.response = await translate(historyItem.response, {
+                to: selectedLanguage,
+              });
+            }
+
+            if (
+              historyItem.response &&
+              round === ROUNDS &&
+              historyItem.model === "xAI"
+            ) {
+              generateTTS(
+                historyItem.response,
+                getEnglishName(selectedLanguage)
+              );
+            }
+
+            setItems((prevVal) => [...prevVal, historyItem]);
+            break;
+
+          case "InternetSearch":
+            if (selectedLanguage !== "en" && historyItem.internetSearch) {
+              // Translate search query
+              historyItem.internetSearch.searchQuery = await translate(
+                historyItem.internetSearch.searchQuery,
+                { to: selectedLanguage }
+              );
+
+              // Translate search results
+              await Promise.all(
+                historyItem.internetSearch.searchResponse.map(
+                  async (searchResult) => {
+                    const [title, snippet, content] = await Promise.all([
+                      translate(searchResult.title, { to: selectedLanguage }),
+                      translate(searchResult.snippet, { to: selectedLanguage }),
+                      searchResult.content
+                        ? translate(searchResult.content, {
+                            to: selectedLanguage,
+                          })
+                        : Promise.resolve(null),
+                    ]);
+
+                    searchResult.title = title;
+                    searchResult.snippet = snippet;
+                    if (content) searchResult.content = content;
+                  }
+                )
+              );
+            }
+            setItems((prevVal) => [...prevVal, historyItem]);
+            break;
+
+          default:
+            // Handle any other types by adding them to items
+            setItems((prevVal) => [...prevVal, historyItem]);
+            break;
         }
       };
 
@@ -428,6 +500,20 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
             </div>
           </motion.div>
         )}
+
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => {
+            setSearchText("");
+            resetTranscript();
+          }}
+          disabled={researching || !searchText || listening}
+          title="Clear search"
+        >
+          <XCircleIcon className="h-4 w-4" />
+          {t("clearButton")}
+        </Button>
 
         <Button type="button" onClick={research} disabled={researching}>
           {researching ? (
@@ -579,17 +665,24 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
                     break;
                   case "FinalConsensusButtons":
                     content = (
-                      <div className="grid grid-cols-2 gap-4">
-                        <InteractiveHoverButton onClick={handleDownload}>
-                          <span className="flex items-center gap-2">
-                            Download <DownloadIcon />
-                          </span>
-                        </InteractiveHoverButton>
-                        <InteractiveHoverButton onClick={handleShare}>
-                          <span className="flex items-center gap-2">
-                            Share <Share2Icon />
-                          </span>
-                        </InteractiveHoverButton>
+                      <div className="flex flex-col w-full gap-4 justify-center items-center">
+                        <div className="grid grid-cols-2 gap-4">
+                          <InteractiveHoverButton onClick={handleDownload}>
+                            <span className="flex items-center gap-2">
+                              Download <DownloadIcon />
+                            </span>
+                          </InteractiveHoverButton>
+                          <InteractiveHoverButton onClick={handleShare}>
+                            <span className="flex items-center gap-2">
+                              Share <Share2Icon />
+                            </span>
+                          </InteractiveHoverButton>
+                        </div>
+                        {currentAudio !== "loading" ? (
+                          <ReactAudioPlayer src={currentAudio} controls />
+                        ) : (
+                          <Spinner size="lg" className="bg-black" />
+                        )}
                       </div>
                     );
                     break;
