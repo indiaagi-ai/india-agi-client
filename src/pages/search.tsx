@@ -29,7 +29,7 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { MicIcon, XCircleIcon } from "lucide-react";
-import { getEnglishName, getLanguageCodeWithCountry, getVoice } from "@/utils";
+import { getLanguageCodeWithCountry, getVoice } from "@/utils";
 import ReactAudioPlayer from "react-audio-player";
 
 interface TTSRequest {
@@ -346,10 +346,7 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
               round === ROUNDS &&
               historyItem.model === "xAI"
             ) {
-              generateTTS(
-                historyItem.response,
-                getEnglishName(selectedLanguage)
-              );
+              generateTTS(historyItem.response);
             }
 
             setItems((prevVal) => [...prevVal, historyItem]);
