@@ -343,7 +343,9 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
 
             if (
               historyItem.response &&
-              round === ROUNDS &&
+              historyItem.roundNumber !== undefined &&
+              historyItem.roundNumber !== null &&
+              historyItem.roundNumber === ROUNDS - 1 &&
               historyItem.model === "xAI"
             ) {
               generateTTS(historyItem.response);
