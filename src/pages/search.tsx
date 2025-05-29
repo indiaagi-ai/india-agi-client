@@ -26,7 +26,6 @@ import { useTranslation } from "react-i18next";
 import { SearchProps } from "@/App";
 import translate from "translate";
 import SpeechRecognition, {
-  ListeningOptions,
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { MicIcon, XCircleIcon } from "lucide-react";
