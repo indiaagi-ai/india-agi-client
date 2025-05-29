@@ -26,6 +26,7 @@ import { useTranslation } from "react-i18next";
 import { SearchProps } from "@/App";
 import translate from "translate";
 import SpeechRecognition, {
+  ListeningOptions,
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { MicIcon, XCircleIcon } from "lucide-react";
@@ -444,6 +445,9 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
             placeholder={t("searchPlaceholder")}
             autoFocus
             className="pr-12"
+            onClick={() => {
+              SpeechRecognition.stopListening();
+            }}
           />
 
           {/* Voice Input Button */}
@@ -507,7 +511,7 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
             setSearchText("");
             resetTranscript();
           }}
-          disabled={researching || !searchText || listening}
+          disabled={researching || !searchText}
           title="Clear search"
         >
           <XCircleIcon className="h-4 w-4" />
