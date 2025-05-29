@@ -210,7 +210,7 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
         {
           text,
           languageCode,
-          voiceName: getVoice(languageCode),
+          voiceName: getVoice(selectedLanguage),
         } as TTSRequest,
         {
           responseType: "blob",
