@@ -1,0 +1,10 @@
+{
+  "searchPlaceholder": "Εισάγετε το ερώτημά σας...",
+  "toolTipTitle": "Ζήστε τη συνεργασία AI σε δράση!",
+  "toolTipSubtitle": "Κάντε μια ερώτηση για να δείτε τον Claude, το ChatGPT, τον Gemini και τον Grok να συζητούν το ερώτημά σας και να παρέχουν μια απάντηση συναίνεσης.",
+  "toolTipButton": "Εντάξει",
+  "clearButton": "Καθαρισμός",
+  "researchButton": "Έρευνα",
+  "flowRoundLabel": "Γύρος: ",
+  "consensusEngine": "Μηχανή Συναίνεσης"
+}

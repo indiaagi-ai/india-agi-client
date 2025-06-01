@@ -1,0 +1,10 @@
+{
+  "searchPlaceholder": "Ange din fråga...",
+  "toolTipTitle": "Upplev AI-samarbete i praktiken!",
+  "toolTipSubtitle": "Ställ en fråga för att se Claude, ChatGPT, Gemini och Grok diskutera din fråga och ge ett samstämt svar.",
+  "toolTipButton": "Okej",
+  "clearButton": "Rensa",
+  "researchButton": "Forskning",
+  "flowRoundLabel": "Omgång: ",
+  "consensusEngine": "Konsensusmotor"
+}

@@ -1,0 +1,10 @@
+{
+  "searchPlaceholder": "Введите запрос...",
+  "toolTipTitle": "Попробуйте сотрудничество ИИ в действии!",
+  "toolTipSubtitle": "Задайте вопрос, чтобы увидеть, как Claude, ChatGPT, Gemini и Grok обсуждают ваш запрос и дают согласованный ответ.",
+  "toolTipButton": "Ок",
+  "clearButton": "Очистить",
+  "researchButton": "Исследовать",
+  "flowRoundLabel": "Раунд: ",
+  "consensusEngine": "Движок консенсуса"
+}

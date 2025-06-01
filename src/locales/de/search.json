@@ -1,0 +1,10 @@
+{
+  "searchPlaceholder": "Geben Sie Ihre Anfrage ein...",
+  "toolTipTitle": "Erleben Sie KI-Zusammenarbeit in Aktion!",
+  "toolTipSubtitle": "Stellen Sie eine Frage, um zu sehen, wie Claude, ChatGPT, Gemini und Grok Ihre Anfrage diskutieren und eine Konsensantwort geben.",
+  "toolTipButton": "Okay",
+  "clearButton": "Löschen",
+  "researchButton": "Recherchieren",
+  "flowRoundLabel": "Runde: ",
+  "consensusEngine": "Konsens-Engine"
+}

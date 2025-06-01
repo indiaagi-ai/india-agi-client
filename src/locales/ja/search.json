@@ -1,0 +1,10 @@
+{
+  "searchPlaceholder": "質問を入力してください...",
+  "toolTipTitle": "AIの協働を体験しましょう！",
+  "toolTipSubtitle": "Claude、ChatGPT、Gemini、Grokがあなたの質問について議論し、合意された答えを提示します。",
+  "toolTipButton": "OK",
+  "clearButton": "クリア",
+  "researchButton": "調査する",
+  "flowRoundLabel": "ラウンド：",
+  "consensusEngine": "コンセンサス・エンジン"
+}

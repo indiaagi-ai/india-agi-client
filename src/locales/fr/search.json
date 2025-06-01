@@ -1,0 +1,10 @@
+{
+  "searchPlaceholder": "Entrez votre requête...",
+  "toolTipTitle": "Découvrez la collaboration entre IA en action !",
+  "toolTipSubtitle": "Posez une question pour voir Claude, ChatGPT, Gemini et Grok discuter de votre requête et fournir une réponse consensuelle.",
+  "toolTipButton": "D'accord",
+  "clearButton": "Effacer",
+  "researchButton": "Recherche",
+  "flowRoundLabel": "Tour : ",
+  "consensusEngine": "Moteur de consensus"
+}
