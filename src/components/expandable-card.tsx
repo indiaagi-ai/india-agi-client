@@ -12,6 +12,7 @@ import { type DebateHistory, HistoryType } from "@/interfaces";
 import { Button } from "@/components/ui/button";
 import { BoxReveal } from "@/components/magicui/box-reveal";
 import { ShineBorder } from "@/components/magicui/shine-border";
+import DeepSeekSvg from "@/assets/deepseek.svg";
 import OpenAISvg from "@/assets/openai.svg";
 import GoogleSvg from "@/assets/google.svg";
 import AnthropicSvg from "@/assets/anthropic.svg";
@@ -23,9 +24,11 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
   const { t } = useTranslation("card");
 
   const getModelName = (
-    provider: "OpenAI" | "Anthropic" | "Google" | "xAI" | "Groq"
+    provider: "OpenAI" | "Anthropic" | "Google" | "xAI" | "Groq" | "DeepSeek"
   ): string => {
     switch (provider) {
+      case "DeepSeek":
+        return "DeepSeek";
       case "OpenAI":
         return "GPT";
       case "Google":
@@ -41,9 +44,16 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
 
   // Determine icon and color based on provider
   const getProviderStyles = (
-    provider: "OpenAI" | "Anthropic" | "Google" | "xAI" | "Groq"
+    provider: "OpenAI" | "Anthropic" | "Google" | "xAI" | "Groq" | "DeepSeek"
   ) => {
     switch (provider) {
+      case "DeepSeek":
+        return {
+          bgColor: "bg-blue-100",
+          textColor: "text-blue-700",
+          borderColor: "border-blue-200",
+          icon: <img src={DeepSeekSvg} className="w-5 h-5 rounded-full" />,
+        };
       case "OpenAI":
         return {
           bgColor: "bg-blue-100",
@@ -85,7 +95,7 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
   const providerStyles = getProviderStyles(item.model);
 
   const getTextHeader = (
-    provider: "OpenAI" | "Anthropic" | "Google" | "xAI" | "Groq",
+    provider: "OpenAI" | "Anthropic" | "Google" | "xAI" | "Groq" | "DeepSeek",
     historyType:
       | "InternetSearch"
       | "TextResponse"

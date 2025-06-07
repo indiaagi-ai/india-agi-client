@@ -5,10 +5,23 @@ import { WavyBackground } from "@/components/ui/wavy-background";
 import video from "@/assets/video.mp4";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { useTranslation } from "react-i18next";
+import DeepSeekSvg from "@/assets/deepseek.svg";
+import OpenAISvg from "@/assets/openai.svg";
+import GoogleSvg from "@/assets/google.svg";
+import AnthropicSvg from "@/assets/anthropic.svg";
+import XAISvg from "@/assets/xai.svg";
 
 export function HeroSectionOne() {
   const { t } = useTranslation("home");
   const navigate = useNavigate();
+
+  const aiIcons = [
+    { src: DeepSeekSvg, alt: "DeepSeek", name: "DeepSeek" },
+    { src: OpenAISvg, alt: "OpenAI", name: "OpenAI" },
+    { src: GoogleSvg, alt: "Google", name: "Google" },
+    { src: AnthropicSvg, alt: "Anthropic", name: "Anthropic" },
+    { src: XAISvg, alt: "xAI", name: "xAI" },
+  ];
 
   return (
     <WavyBackground
@@ -47,6 +60,44 @@ export function HeroSectionOne() {
                 </motion.span>
               ))}
           </h1>
+          {/* AI Icons Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.9 }}
+            className="relative z-10"
+          >
+            <p className="text-center md:text-left text-sm font-medium text-neutral-500 dark:text-neutral-400 mb-4">
+              Powered by leading AI models
+            </p>
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
+              {aiIcons.map((icon, index) => (
+                <motion.div
+                  key={icon.name}
+                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{
+                    duration: 0.4,
+                    delay: 1 + index * 0.1,
+                    ease: "easeOut",
+                  }}
+                  className="group relative"
+                >
+                  <div className="flex items-center justify-center w-12 h-12 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 transition-all duration-300 group-hover:shadow-lg group-hover:border-gray-300 dark:group-hover:border-gray-600">
+                    <img
+                      src={icon.src}
+                      alt={icon.alt}
+                      className="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-110"
+                    />
+                  </div>
+                  {/* Tooltip */}
+                  <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
+                    {icon.name}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
           <motion.p
             initial={{
               opacity: 0,
@@ -62,6 +113,7 @@ export function HeroSectionOne() {
           >
             {t("subtitle")}
           </motion.p>
+
           <motion.div
             initial={{
               opacity: 0,
@@ -71,7 +123,7 @@ export function HeroSectionOne() {
             }}
             transition={{
               duration: 0.3,
-              delay: 1,
+              delay: 1.5,
             }}
             className="relative z-10 mt-8 flex flex-wrap items-center justify-center md:justify-start gap-4"
           >

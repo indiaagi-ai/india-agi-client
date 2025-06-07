@@ -7,6 +7,7 @@ import { DebateHistory, Provider } from "@/interfaces";
 import { ExpandableCard } from "@/components/expandable-card";
 import { Spinner } from "@/components/ui/spinner";
 import React from "react";
+import DeepSeekSvg from "@/assets/deepseek.svg";
 import OpenAISvg from "@/assets/openai.svg";
 import GoogleSvg from "@/assets/google.svg";
 import AnthropicSvg from "@/assets/anthropic.svg";
@@ -51,6 +52,7 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
   const { t } = useTranslation("search");
 
   const providers = [
+    { id: Provider.DeepSeek, icon: DeepSeekSvg },
     { id: Provider.OpenAI, icon: OpenAISvg },
     { id: Provider.Google, icon: GoogleSvg },
     { id: Provider.Anthropic, icon: AnthropicSvg },
@@ -64,6 +66,7 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
   const div2Ref = useRef<HTMLDivElement>(null);
   const div3Ref = useRef<HTMLDivElement>(null);
   const div4Ref = useRef<HTMLDivElement>(null);
+  const div5Ref = useRef<HTMLDivElement>(null);
 
   const userIconRef = useRef<HTMLDivElement>(null);
   const userQueryRef = useRef<HTMLDivElement>(null);
@@ -79,14 +82,16 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
 
   const getModelRef = (provider: Provider) => {
     switch (provider) {
-      case Provider.OpenAI:
+      case Provider.DeepSeek:
         return div1Ref;
-      case Provider.Google:
+      case Provider.OpenAI:
         return div2Ref;
-      case Provider.Anthropic:
+      case Provider.Google:
         return div3Ref;
-      case Provider.xAI:
+      case Provider.Anthropic:
         return div4Ref;
+      case Provider.xAI:
+        return div5Ref;
     }
   };
 
@@ -279,7 +284,7 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
     SpeechRecognition.stopListening();
     setResearching(true);
     setItems([]);
-    setProvider(Provider.OpenAI);
+    setProvider(Provider.DeepSeek);
     setRound(1);
 
     localStorage.setItem("showToolTip", "false");
@@ -311,6 +316,9 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
             break;
           case "xAI":
             setProvider(Provider.xAI);
+            break;
+          case "DeepSeek":
+            setProvider(Provider.DeepSeek);
             break;
         }
 
@@ -602,6 +610,12 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
                       containerRef={containerRef}
                       fromRef={div2Ref}
                       toRef={div3Ref}
+                      duration={5}
+                    />
+                    <AnimatedBeam
+                      containerRef={containerRef}
+                      fromRef={div3Ref}
+                      toRef={div4Ref}
                       duration={5}
                     />
                   </div>

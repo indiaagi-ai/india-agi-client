@@ -7,7 +7,7 @@ export interface DebateHistory {
     | "RoundUpdate"
     | "ProviderUpdate"
     | "FinalConsensusButtons";
-  model: "OpenAI" | "Anthropic" | "Google" | "xAI" | "Groq";
+  model: "OpenAI" | "Anthropic" | "Google" | "xAI" | "Groq" | "DeepSeek";
   response?: string;
   internetSearch?: InternetSearch;
   roundNumber?: number;
