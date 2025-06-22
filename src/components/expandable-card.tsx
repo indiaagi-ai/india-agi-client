@@ -18,6 +18,7 @@ import GoogleSvg from "@/assets/google.svg";
 import AnthropicSvg from "@/assets/anthropic.svg";
 import XAISvg from "@/assets/xai.svg";
 import { useTranslation } from "react-i18next";
+import "@/markdown-styles.css";
 
 export function ExpandableCard({ item }: { item: DebateHistory }) {
   const [expanded, setExpanded] = useState(false);
@@ -208,7 +209,22 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
             {item.type === HistoryType.textResponse && item.response && (
               <div className="text-sm whitespace-pre-line font-fira_code">
                 {expanded ? (
-                  <ReactMarkdown>{item.response}</ReactMarkdown>
+                  <div className="markdown-content">
+                    <ReactMarkdown
+                      components={{
+                        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                        a: ({ node, ...props }) => (
+                          <a
+                            {...props}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          />
+                        ),
+                      }}
+                    >
+                      {item.response}
+                    </ReactMarkdown>
+                  </div>
                 ) : (
                   <BoxReveal boxColor={"#5046e6"} duration={0.5}>
                     <ReactMarkdown>{`${item.response.substring(
