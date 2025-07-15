@@ -3,6 +3,7 @@
   "toolTipTitle": "Upplev AI-samarbete i praktiken!",
   "toolTipSubtitle": "Ställ en fråga för att se Claude, ChatGPT, Gemini och Grok diskutera din fråga och ge ett samstämt svar.",
   "toolTipButton": "Okej",
+  "abortButton": "Avbryt",
   "clearButton": "Rensa",
   "researchButton": "Forskning",
   "flowRoundLabel": "Omgång: ",

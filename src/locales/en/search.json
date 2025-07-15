@@ -3,6 +3,7 @@
   "toolTipTitle": "Experience AI collaboration in action!",
   "toolTipSubtitle": "Ask a question to see Claude, ChatGPT, Gemini and Grok discuss your query and provide a consensus answer.",
   "toolTipButton": "Okay",
+  "abortButton": "Abort",
   "clearButton": "Clear",
   "researchButton": "Research",
   "flowRoundLabel": "Round: ",

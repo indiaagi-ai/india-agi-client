@@ -3,6 +3,7 @@
   "toolTipTitle": "شاهد تعاون الذكاء الاصطناعي أثناء العمل!",
   "toolTipSubtitle": "اطرح سؤالًا لترى Claude وChatGPT وGemini وGrok يناقشون استفسارك ويقدمون إجابة جماعية.",
   "toolTipButton": "حسنًا",
+  "abortButton": "إلغاء",
   "clearButton": "مسح",
   "researchButton": "بحث",
   "flowRoundLabel": "الجولة:",

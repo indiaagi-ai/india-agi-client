@@ -29,7 +29,7 @@ import translate from "translate";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import { MicIcon, XCircleIcon } from "lucide-react";
+import { MicIcon, XCircleIcon, XIcon } from "lucide-react";
 import { getLanguageCodeWithCountry, getVoice } from "@/utils";
 import ReactAudioPlayer from "react-audio-player";
 
@@ -70,6 +70,8 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
 
   const userIconRef = useRef<HTMLDivElement>(null);
   const userQueryRef = useRef<HTMLDivElement>(null);
+
+  const eventSourceRef = useRef<EventSource>(null);
 
   const {
     transcript,
@@ -269,6 +271,12 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
     isMicrophoneAvailable,
   ]);
 
+  const abort = () => {
+    eventSourceRef.current?.close();
+    setResearching(false);
+    setProvider(null);
+  };
+
   const research = async () => {
     if (searchText.length === 0) {
       return;
@@ -298,6 +306,8 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
           translatedSearchText
         )}&rounds=${ROUNDS}`
       );
+
+      eventSourceRef.current = eventSource;
 
       // Handle messages
       eventSource.onmessage = async ({ data }) => {
@@ -451,14 +461,28 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
             }}
             placeholder={t("searchPlaceholder")}
             autoFocus
-            className="pr-12"
+            className={cn("pr-12", researching && "pr-24")} // Extra padding when abort button is visible
             onClick={() => {
               SpeechRecognition.stopListening();
             }}
           />
 
-          {/* Voice Input Button */}
+          {/* Abort Button - only visible when researching */}
+          {researching && (
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="absolute right-10 h-8 px-2 text-red-600 hover:bg-red-100 flex items-center gap-1"
+              onClick={abort} // You'll need to implement this function
+              title="Abort research"
+            >
+              <XIcon className="h-4 w-4" />
+              <span className="text-xs">{t("abortButton")}</span>
+            </Button>
+          )}
 
+          {/* Voice Input Button */}
           <Button
             type="button"
             variant="ghost"

@@ -3,6 +3,7 @@
   "toolTipTitle": "Trải nghiệm sự hợp tác AI trong hành động!",
   "toolTipSubtitle": "Đặt câu hỏi để xem Claude, ChatGPT, Gemini và Grok thảo luận truy vấn của bạn và cung cấp câu trả lời đồng thuận.",
   "toolTipButton": "Đồng ý",
+  "abortButton": "Hủy bỏ",
   "clearButton": "Xóa",
   "researchButton": "Nghiên cứu",
   "flowRoundLabel": "Vòng: ",

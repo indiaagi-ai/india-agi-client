@@ -3,6 +3,7 @@
   "toolTipTitle": "¡Experimenta la colaboración de IA en acción!",
   "toolTipSubtitle": "Haz una pregunta para ver cómo Claude, ChatGPT, Gemini y Grok discuten tu consulta y proporcionan una respuesta consensuada.",
   "toolTipButton": "De acuerdo",
+  "abortButton": "Abortar",
   "clearButton": "Borrar",
   "researchButton": "Investigar",
   "flowRoundLabel": "Ronda: ",

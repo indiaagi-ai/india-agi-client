@@ -4,6 +4,7 @@
   "toolTipSubtitle": "Posez une question pour voir Claude, ChatGPT, Gemini et Grok discuter de votre requête et fournir une réponse consensuelle.",
   "toolTipButton": "D'accord",
   "clearButton": "Effacer",
+  "abortButton": "Annuler",
   "researchButton": "Recherche",
   "flowRoundLabel": "Tour : ",
   "consensusEngine": "Moteur de consensus"

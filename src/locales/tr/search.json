@@ -3,6 +3,7 @@
   "toolTipTitle": "Yapay zeka işbirliğini canlı olarak deneyimleyin!",
   "toolTipSubtitle": "Bir soru sorun, Claude, ChatGPT, Gemini ve Grok sorgunuzu tartışsın ve konsensüs bir cevap versin.",
   "toolTipButton": "Tamam",
+  "abortButton": "İptal Et",
   "clearButton": "Temizle",
   "researchButton": "Araştır",
   "flowRoundLabel": "Tur: ",

@@ -3,6 +3,7 @@
   "toolTipTitle": "Esperientzia ezazu AI lankidetza martxan!",
   "toolTipSubtitle": "Galdera bat egin Claude, ChatGPT, Gemini eta Grok zure kontsulta eztabaidatzen eta adostasun erantzuna ematen ikusteko.",
   "toolTipButton": "Ados",
+  "abortButton": "Abortatu",
   "clearButton": "Garbitu",
   "researchButton": "Ikerketa",
   "flowRoundLabel": "Biraketa: ",

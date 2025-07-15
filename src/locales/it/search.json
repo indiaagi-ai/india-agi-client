@@ -3,6 +3,7 @@
   "toolTipTitle": "Vivi la collaborazione AI in azione!",
   "toolTipSubtitle": "Fai una domanda per vedere Claude, ChatGPT, Gemini e Grok discutere la tua richiesta e fornire una risposta consensuale.",
   "toolTipButton": "Ok",
+  "abortButton": "Interrompi",
   "clearButton": "Pulisci",
   "researchButton": "Ricerca",
   "flowRoundLabel": "Round: ",

@@ -3,6 +3,7 @@
   "toolTipTitle": "体验 AI 协作！",
   "toolTipSubtitle": "提出一个问题，观看 Claude、ChatGPT、Gemini 和 Grok 的讨论并获得共识答案。",
   "toolTipButton": "好的",
+  "abortButton": "中止",
   "clearButton": "清除",
   "researchButton": "研究",
   "flowRoundLabel": "轮次：",
