@@ -97,6 +97,21 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
     }
   };
 
+  const getModelId = (provider: Provider) => {
+    switch (provider) {
+      case Provider.DeepSeek:
+        return "deepseek";
+      case Provider.OpenAI:
+        return "gpt-5-mini";
+      case Provider.Google:
+        return "gemini-2.0-flash";
+      case Provider.Anthropic:
+        return "claude-3-haiku";
+      case Provider.xAI:
+        return "grok-3-mini";
+    }
+  };
+
   const handleDownload = async () => {
     let consensus: string = "";
     for (const item of items) {
@@ -590,7 +605,7 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
               ref={mainContainerRef}
             >
               <div
-                className="w-full max-w-2xl flex justify-around mx-auto relative border border-dashed border-black rounded-3xl p-5 z-10 bg-[#faf9f5]"
+                className="w-full max-w-2xl flex mx-auto relative border border-dashed border-black rounded-3xl p-5 z-10 bg-[#faf9f5]"
                 ref={containerRef}
               >
                 <div className="absolute -top-3 left-4 px-2 bg-[#faf9f5] font-medium z-20 flex items-center gap-2">
@@ -599,12 +614,15 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
                     <>{`${t("flowRoundLabel")} ${round}`}</>
                   </BoxReveal>
                 </div>
-                {/* Render the circles first */}
+
                 {providers.map(({ id, icon }) => (
-                  <div key={id} className="flex justify-center items-center">
+                  <div
+                    key={id}
+                    className="flex-1 flex flex-col items-center justify-center gap-2"
+                  >
                     {id === provider ? (
                       <Circle ref={getModelRef(id)}>
-                        <div className="relative w-16 h-16 rounded-full">
+                        <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-full">
                           <ShineBorder
                             shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
                             borderWidth={8}
@@ -612,7 +630,7 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
                           />
                           <img
                             src={icon}
-                            className="w-16 h-16 rounded-full bg-blue-100 p-3"
+                            className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-blue-100 p-2 sm:p-3"
                           />
                         </div>
                       </Circle>
@@ -620,10 +638,11 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
                       <Circle ref={getModelRef(id)}>
                         <img
                           src={icon}
-                          className="w-16 h-16 rounded-full bg-blue-100 p-3"
+                          className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-blue-100 p-2 sm:p-3"
                         />
                       </Circle>
                     )}
+
                     <AnimatedBeam
                       containerRef={containerRef}
                       fromRef={div1Ref}
@@ -642,9 +661,15 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
                       toRef={div4Ref}
                       duration={5}
                     />
+
+                    {/* Hide name on small screens */}
+                    <span className="hidden sm:block text-sm text-gray-700">
+                      {getModelId(id)}
+                    </span>
                   </div>
                 ))}
               </div>
+
               <div
                 className="w-full max-w-2xl flex justify-center mx-auto relative"
                 ref={consensusContainerRef}
@@ -657,10 +682,19 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
                       duration={1}
                     />
                   )}
-                  <img src={XAISvg} className="rounded-full p-3 h-16 w-16" />
-                  <span>{t("consensusEngine")}</span>
+                  <img
+                    src={XAISvg}
+                    className="rounded-full p-2 sm:p-3 h-12 w-12 sm:h-16 sm:w-16"
+                  />
+                  <div className="flex flex-col">
+                    <span>{t("consensusEngine")}</span>
+                    <span className="hidden sm:block text-sm text-gray-700">
+                      {getModelId(Provider.xAI)}
+                    </span>
+                  </div>
                 </div>
               </div>
+
               <AnimatedBeam
                 containerRef={mainContainerRef}
                 fromRef={containerRef}
@@ -679,6 +713,7 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
                 reverse
               />
             </div>
+
             <AnimatedBeam
               containerRef={outerContainerRef}
               fromRef={userIconRef}
