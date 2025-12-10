@@ -15,10 +15,6 @@ COPY package.json pnpm-lock.yaml ./
 # Install the application dependencies using pnpm
 RUN pnpm install --frozen-lockfile
 
-# Install PM2 globally and application dependencies
-# pnpm can install global packages similarly to npm
-RUN pnpm install pm2 -g && pnpm install
-
 # Copy the rest of the application files
 COPY . .
 
