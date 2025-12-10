@@ -1,32 +1,32 @@
 # Use the official Node.js image as the base image
 FROM node:slim
 
+# Install pnpm globally
+# You must install pnpm as it is not included in the base Node.js image
+RUN npm install -g pnpm
+
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Copy the dependency files explicitly and ensure they are available
-# **THIS IS THE CRITICAL CHANGE**
-COPY package.json ./
-COPY package-lock.json ./ 
+# Copy package.json and pnpm-lock.yaml to the working directory
+# pnpm uses pnpm-lock.yaml instead of package-lock.json
+COPY package.json pnpm-lock.yaml ./
 
-# Install the application dependencies using the lock file
-RUN npm ci
-
-# --- Your subsequent steps (Reviewing these below) ---
+# Install the application dependencies using pnpm
+RUN pnpm install --frozen-lockfile
 
 # Install PM2 globally and application dependencies
-# NOTE: The second 'npm install' here is redundant after 'npm ci'.
-RUN npm install pm2 -g 
-# You should remove the redundant '&& npm install' above.
+# pnpm can install global packages similarly to npm
+RUN pnpm install pm2 -g && pnpm install
 
 # Copy the rest of the application files
 COPY . .
 
-# Build the NestJS application
-RUN npm run build
+# Build the NestJS application using pnpm
+RUN pnpm run build
 
 # Expose the application port
 EXPOSE 4002
 
-# Command to run the application
-CMD ["npm", "run", "serve"]
+# Command to run the application using pnpm
+CMD ["pnpm", "run", "serve"]
