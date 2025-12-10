@@ -7,7 +7,6 @@ import { DebateHistory, Provider } from "@/interfaces";
 import { ExpandableCard } from "@/components/expandable-card";
 import { Spinner } from "@/components/ui/spinner";
 import React from "react";
-import DeepSeekSvg from "@/assets/deepseek.svg";
 import OpenAISvg from "@/assets/openai.svg";
 import GoogleSvg from "@/assets/google.svg";
 import AnthropicSvg from "@/assets/anthropic.svg";
