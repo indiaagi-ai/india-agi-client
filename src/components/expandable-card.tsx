@@ -184,7 +184,9 @@ export function ExpandableCard({ item }: { item: DebateHistory }) {
                           </div>
                           <BoxReveal boxColor={"#5046e6"} duration={0.5}>
                             <p className="text-gray-600 mb-2">
-                              {result.snippet}
+                              {result.snippet.length > 200
+                                ? result.snippet.slice(0, 200) + "..."
+                                : result.snippet}
                             </p>
                           </BoxReveal>
                           {expanded && (

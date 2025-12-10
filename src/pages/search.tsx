@@ -52,7 +52,7 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
   const { t } = useTranslation("search");
 
   const providers = [
-    { id: Provider.DeepSeek, icon: DeepSeekSvg },
+    // { id: Provider.DeepSeek, icon: DeepSeekSvg },
     { id: Provider.OpenAI, icon: OpenAISvg },
     { id: Provider.Google, icon: GoogleSvg },
     { id: Provider.Anthropic, icon: AnthropicSvg },
@@ -104,7 +104,7 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
       case Provider.OpenAI:
         return "gpt-5-mini";
       case Provider.Google:
-        return "gemini-2.0-flash";
+        return "gemini-2.5-flash";
       case Provider.Anthropic:
         return "claude-3-haiku";
       case Provider.xAI:
