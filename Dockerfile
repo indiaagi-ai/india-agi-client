@@ -4,14 +4,20 @@ FROM node:slim
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+# Copy the dependency files explicitly and ensure they are available
+# **THIS IS THE CRITICAL CHANGE**
+COPY package.json ./
+COPY package-lock.json ./ 
 
-# Install the application dependencies
+# Install the application dependencies using the lock file
 RUN npm ci
 
+# --- Your subsequent steps (Reviewing these below) ---
+
 # Install PM2 globally and application dependencies
-RUN npm install pm2 -g && npm install
+# NOTE: The second 'npm install' here is redundant after 'npm ci'.
+RUN npm install pm2 -g 
+# You should remove the redundant '&& npm install' above.
 
 # Copy the rest of the application files
 COPY . .
