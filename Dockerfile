@@ -1,5 +1,5 @@
 # Use the official Node.js image as the base image
-FROM node:lts-alpine
+FROM node:slim
 
 # Set the working directory inside the container
 WORKDIR /usr/src/app
@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install the application dependencies
-RUN npm install
+RUN npm ci
 
 # Install PM2 globally and application dependencies
 RUN npm install pm2 -g && npm install
