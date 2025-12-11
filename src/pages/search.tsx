@@ -31,6 +31,7 @@ import SpeechRecognition, {
 import { MicIcon, XCircleIcon, XIcon } from "lucide-react";
 import { getLanguageCodeWithCountry, getVoice } from "@/utils";
 import ReactAudioPlayer from "react-audio-player";
+import { useLocation } from "react-router-dom";
 
 interface TTSRequest {
   text: string;
@@ -47,6 +48,7 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
   const [toolTipVisible, setToolTipVisible] = useState<boolean>(false);
   const [currentAudio, setCurrentAudio] = useState<string | undefined>();
   const ROUNDS = 3;
+  const location = useLocation();
 
   const { t } = useTranslation("search");
 
@@ -454,6 +456,12 @@ export function SearchPage({ selectedLanguage }: SearchProps) {
   useEffect(() => {
     console.log(`listening ${listening}`);
   }, [listening]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const query = params.get("query") ?? "";
+    setSearchText(query);
+  }, [location.search, setSearchText]);
 
   return (
     <div className="flex flex-col gap-5 w-full max-w-6xl">
