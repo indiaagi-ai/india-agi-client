@@ -8,7 +8,7 @@ RUN npm install -g pnpm
 WORKDIR /usr/src/app
 
 # Copy package.json and pnpm lock file to the working directory
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 # Install the application dependencies using pnpm
 RUN pnpm install --frozen-lockfile
