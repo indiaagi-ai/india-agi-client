@@ -9,7 +9,7 @@ WORKDIR /usr/src/app
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 # Frozen install = exact same versions as your local machine
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --allow-build=esbuild --frozen-lockfile
 
 # Copy the rest of the application files
 COPY . .
