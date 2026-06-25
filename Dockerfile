@@ -13,7 +13,7 @@ WORKDIR /usr/src/app
 COPY package.json pnpm-lock.yaml ./
 
 # Install the application dependencies using pnpm
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --config.enable-pre-post-scripts=true
 
 # Copy the rest of the application files
 COPY . .
