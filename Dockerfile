@@ -1,8 +1,8 @@
 # Use the official Node.js image as the base image
 FROM node:slim
 
-# Enable corepack and install pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# Install pnpm globally
+RUN npm install -g pnpm
 
 # Set the working directory inside the container
 WORKDIR /usr/src/app
