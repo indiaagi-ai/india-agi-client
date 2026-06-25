@@ -1,26 +1,22 @@
-# Use the official Node.js image as the base image
 FROM node:slim
 
-# Install pnpm globally
+# Install pnpm
 RUN npm install -g pnpm
 
-# Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Copy package.json and pnpm lock file to the working directory
+# Copy lockfile + package.json first (for layer caching)
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-# Install the application dependencies using pnpm
+# Frozen install = exact same versions as your local machine
 RUN pnpm install --frozen-lockfile
 
 # Copy the rest of the application files
 COPY . .
 
-# Build the NestJS application using pnpm
+# Build the NestJS application
 RUN pnpm run build
 
-# Expose the application port
 EXPOSE 4002
 
-# Command to run the application using pnpm
 CMD ["pnpm", "run", "serve"]
