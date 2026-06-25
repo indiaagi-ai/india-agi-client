@@ -1,23 +1,26 @@
 # Use the official Node.js image as the base image
 FROM node:slim
 
+# Enable corepack and install pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json to the working directory
-COPY package.json package-lock.json ./
+# Copy package.json and pnpm lock file to the working directory
+COPY package.json pnpm-lock.yaml ./
 
-# Install the application dependencies using npm
-RUN npm install
+# Install the application dependencies using pnpm
+RUN pnpm install --frozen-lockfile
 
 # Copy the rest of the application files
 COPY . .
 
-# Build the NestJS application using npm
-RUN npm run build
+# Build the NestJS application using pnpm
+RUN pnpm run build
 
 # Expose the application port
 EXPOSE 4002
 
-# Command to run the application using npm
-CMD ["npm", "run", "serve"]
+# Command to run the application using pnpm
+CMD ["pnpm", "run", "serve"]
