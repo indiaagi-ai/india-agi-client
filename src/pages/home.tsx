@@ -125,7 +125,7 @@ export function HeroSectionOne() {
               duration: 0.3,
               delay: 1.5,
             }}
-            className="relative z-10 mt-8 flex flex-wrap items-center justify-center md:justify-start gap-4"
+            className="relative z-10 mt-8 flex flex-wrap items-center justify-center gap-4"
           >
             <button
               onClick={() => {
@@ -148,6 +148,31 @@ export function HeroSectionOne() {
               <span className="inline-flex items-center">
                 {t("contribute")}
                 <GitHubLogoIcon className="ml-1 size-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </span>
+            </button>
+          </motion.div>
+          <motion.div
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            transition={{
+              duration: 0.3,
+              delay: 1.5,
+            }}
+            className="relative mt-2 flex flex-wrap items-center justify-center gap-4"
+          >
+            <button
+              onClick={() => {
+                window.open("https://searchmyblogs.indiaagi.ai/");
+              }}
+              className="group w-100 transform rounded-lg border-2 border-black bg-white px-6 py-2 font-medium text-black transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-100 dark:border-white dark:bg-black dark:text-white dark:hover:bg-gray-900 hover:cursor-pointer"
+            >
+              <span className="inline-flex items-center">
+                {"Search my blogs on www.HemenParekh.in"}
+                <ChevronRightIcon className="ml-1 size-4 transition-transform duration-300 group-hover:translate-x-1" />
               </span>
             </button>
           </motion.div>
